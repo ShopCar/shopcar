@@ -1,31 +1,38 @@
 import {
 	Box,
 	Container,
+	Flex,
+	Image,
 	Stack,
 	Text,
 	useColorModeValue
 } from "@chakra-ui/react";
 
+import whiteLogo from "../../assets/logoW.png";
+import ScrollToTop from "../ScrollToTop";
+
 const Footer = () => {
 	return (
 		<>
-			<Box
-				borderTop={1}
-				borderStyle={"solid"}
-				bg={useColorModeValue("white", "gray.800")}
-				color={useColorModeValue("gray.600", "white")}
-				borderColor={useColorModeValue("gray.200", "gray.900")}
-			>
-				<Container
-					as={Stack}
-					maxW={"6xl"}
-					py={4}
-					spacing={4}
-					centerContent={true}
-				>
-					<Text>© 2023 ShopCar. All rights reserved</Text>
-				</Container>
+			<Box bg="grey.0">
+				<Flex px="60px" align="center" justifyContent="flex-start">
+					<Box py="16px">
+						<Image
+							objectFit="cover"
+							src={whiteLogo}
+							alt="ShopCar Logo"
+							title="ShopCar"
+							h="50px"
+						/>
+					</Box>
+					<Flex justifyContent="center" w="full">
+						<Text size="2" variant="400" color="white">
+							© 2023 ShopCar. All rights reserved
+						</Text>
+					</Flex>
+				</Flex>
 			</Box>
+			<ScrollToTop />
 		</>
 	);
 };

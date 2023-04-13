@@ -5,8 +5,9 @@ const ThemeSelector = () => {
 	const { colorMode, toggleColorMode } = useColorMode();
 
 	return (
-		<Box textAlign="right" position="absolute" top="2" right="4">
+		<Box textAlign="center">
 			<IconButton
+				size="sm"
 				aria-label="mode"
 				icon={colorMode === "light" ? <MoonIcon /> : <SunIcon />}
 				onClick={toggleColorMode}

@@ -1,6 +1,10 @@
+import { Heading, VStack } from "@chakra-ui/layout";
+
 const Login = () => {
 	return (
-		<h1>Login</h1>
+		<VStack gap="4" h="150vh" pt="60px">
+			<Heading>Login</Heading>
+		</VStack>
 	);
 };
 
