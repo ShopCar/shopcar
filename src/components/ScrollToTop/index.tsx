@@ -27,6 +27,22 @@ export default function ScrollToTop() {
 		});
 	};
 
+	const bottom = {
+		xs: "123px",
+		sm: "123px",
+		md: "33px",
+		xl: "28px",
+		"2xl": "28px"
+	};
+
+	const right = {
+		xs: "16px",
+		sm: "16px",
+		md: "30px",
+		xl: "60px",
+		"2xl": "60px"
+	};
+
 	return (
 		<>
 			{isVisible && (
@@ -41,8 +57,8 @@ export default function ScrollToTop() {
 					variant="solid"
 					onClick={scrollToTop}
 					position="fixed"
-					bottom="25px"
-					right={["16px", "60px"]}
+					bottom={bottom}
+					right={right}
 					zIndex="3"
 				/>
 			)}

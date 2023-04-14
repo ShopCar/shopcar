@@ -1,28 +1,49 @@
-import {
-	Box,
-	Container,
-	Flex,
-	Image,
-	Stack,
-	Text,
-	useColorModeValue
-} from "@chakra-ui/react";
+import { Box, Flex, Image, Text } from "@chakra-ui/react";
 
-import whiteLogo from "../../assets/logoW.png";
 import ScrollToTop from "../ScrollToTop";
 
+import whiteLogo from "../../assets/logoW.png";
+
 const Footer = () => {
+	const hFlex = {
+		xs: "210px",
+		sm: "210px",
+		md: "100px",
+		xl: "100px",
+		"2xl": "100px"
+	};
+
+	const pxFlex = {
+		xs: "16px",
+		sm: "16px",
+		md: "30px",
+		xl: "60px",
+		"2xl": "60px"
+	};
+
 	return (
 		<>
 			<Box bg="grey.0">
-				<Flex px="60px" align="center" justifyContent="flex-start">
-					<Box py="16px">
+				<Flex
+					h={hFlex}
+					px={pxFlex}
+					align="center"
+					justifyContent="space-evenly"
+					flexDirection={{
+						xs: "column",
+						sm: "column",
+						md: "row",
+						xl: "row",
+						"2xl": "row"
+					}}
+				>
+					<Box>
 						<Image
 							objectFit="cover"
 							src={whiteLogo}
 							alt="ShopCar Logo"
 							title="ShopCar"
-							h="50px"
+							h="60px"
 						/>
 					</Box>
 					<Flex justifyContent="center" w="full">
