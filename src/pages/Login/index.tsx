@@ -1,34 +1,19 @@
-import { VStack, Text } from "@chakra-ui/layout";
-import InputForm from "../../components/Input";
-import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
-import { Button, Flex, HStack, Heading } from "@chakra-ui/react";
-import api from "../../services/api";
+import InputForm from "../../components/Input";
 import NavLink from "../../components/NavLink";
-
-export interface ILoginForm {
-    email: string;
-    password: string;
-}
+import { VStack, Text } from "@chakra-ui/layout";
+import { iLoginForm } from "../../types/contexts.type";
+import { Button, Flex, Heading } from "@chakra-ui/react";
+import { useUserContext } from "../../contexts/userContext";
 
 const Login = () => {
-    const [token, setToken] = useState<string | null>(null);
-
-    const login = async (data: any) => {
-        try {
-            const token = await api.post("/login", data);
-            console.log(token.data.token);
-            setToken(token.data.token);
-        } catch (error) {
-            console.log(error);
-        }
-    };
+    const { login } = useUserContext();
 
     const {
         register,
         handleSubmit,
         formState: { errors },
-    } = useForm<ILoginForm>();
+    } = useForm<iLoginForm>();
 
     return (
         <VStack

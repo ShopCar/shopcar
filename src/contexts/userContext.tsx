@@ -1,16 +1,33 @@
+import api from "../services/api";
 import { createContext, useContext, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { iLoginForm, iUserContextProps } from "../types/contexts.type";
 
-export const UserContext = createContext({});
+export const UserContext = createContext({} as iUserContextProps);
 
 export const UserProvider = ({ children }: any) => {
-	const [user, setUser] = useState<true | null | undefined>(null);
+    const [user, setUser] = useState<true | null | undefined>(null);
+    const [token, setToken] = useState<string | null>(null);
 
-	const navigate = useNavigate();
-	const location = useLocation();
-	const pathParams = useParams();
+    const navigate = useNavigate();
+    const location = useLocation();
+    const pathParams = useParams();
 
-	return <UserContext.Provider value={{}}>{children}</UserContext.Provider>;
+    const login = async (data: iLoginForm) => {
+        try {
+            const response = await api.post("/login", data);
+            setUser(response.data.user);
+            setToken(response.data.token);
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    return (
+        <UserContext.Provider value={{ login }}>
+            {children}
+        </UserContext.Provider>
+    );
 };
 
-export const useUserContext = () => useContext(UserContext);
+export const useUserContext = (): iUserContextProps => useContext(UserContext);
