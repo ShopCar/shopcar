@@ -1,11 +1,16 @@
 import { CarProvider } from "./carContext";
 import { UserProvider } from "./userContext";
+import { GlobalProvider } from "./globalContext";
 
-const Providers = ({ children }: any) => {
+import { mandatoryChildren } from "../types/childrenProps";
+
+const Providers = ({ children }: mandatoryChildren) => {
 	return (
-		<UserProvider>
-			<CarProvider>{children}</CarProvider>
-		</UserProvider>
+		<GlobalProvider>
+			<UserProvider>
+				<CarProvider>{children}</CarProvider>
+			</UserProvider>
+		</GlobalProvider>
 	);
 };
 

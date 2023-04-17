@@ -4,7 +4,11 @@ import { ComponentStyleConfig, StyleFunctionProps } from "@chakra-ui/react";
 const standard = (props: StyleFunctionProps) => ({
 	bg: mode("grey.0", "grey.5")(props),
 	color: mode("white", "grey.0")(props),
+	transition: "all 0.5s ease-out",
 	_hover: {
+		bg: mode("grey.1", "grey.5")(props)
+	},
+	_active: {
 		bg: mode("grey.1", "grey.5")(props)
 	}
 });
@@ -12,7 +16,11 @@ const standard = (props: StyleFunctionProps) => ({
 const negative = (props: StyleFunctionProps) => ({
 	bg: mode("grey.6", "grey.8")(props),
 	color: mode("grey.2", "grey.0")(props),
+	transition: "all 0.5s ease-out",
 	_hover: {
+		bg: "grey.5"
+	},
+	_active: {
 		bg: "grey.5"
 	}
 });
@@ -26,7 +34,11 @@ const disable = (props: StyleFunctionProps) => ({
 const brand1 = (props: StyleFunctionProps) => ({
 	bg: "brand.1",
 	color: "white",
+	transition: "all 0.5s ease-out",
 	_hover: {
+		bg: "brand.2"
+	},
+	_active: {
 		bg: "brand.2"
 	}
 });
@@ -34,17 +46,27 @@ const brand1 = (props: StyleFunctionProps) => ({
 const brandOpacity = (props: StyleFunctionProps) => ({
 	bg: "brand.4",
 	color: "brand.1",
+	transition: "all 0.5s ease-out",
 	_hover: {
 		bg: "grey.10",
 		color: "grey.1"
+	},
+	_active: {
+		color: "grey.1",
+		bg: "grey.10"
 	}
 });
 
 const outlineLight = (props: StyleFunctionProps) => ({
 	bg: "grey.10",
 	color: "grey.10",
+	transition: "all 0.5s ease-out",
 	_hover: {
 		color: "grey.1"
+	},
+	_active: {
+		color: "grey.1",
+		bg: "grey.10"
 	}
 });
 
@@ -53,7 +75,12 @@ const outline1 = (props: StyleFunctionProps) => ({
 	border: "1.5px solid",
 	borderColor: "grey.0",
 	color: "grey.0",
+	transition: "all 0.5s ease-out",
 	_hover: {
+		bg: "grey.1",
+		color: "grey.10"
+	},
+	_active: {
 		bg: "grey.1",
 		color: "grey.10"
 	}
@@ -64,7 +91,12 @@ const outline2 = (props: StyleFunctionProps) => ({
 	border: "1.5px solid",
 	borderColor: "grey.4",
 	color: "grey.0",
+	transition: "all 0.5s ease-out",
 	_hover: {
+		bg: "grey.1",
+		color: "grey.10"
+	},
+	_active: {
 		bg: "grey.1",
 		color: "grey.10"
 	}
@@ -75,7 +107,12 @@ const outlineBrand1 = (props: StyleFunctionProps) => ({
 	border: "1.5px solid",
 	borderColor: "brand.1",
 	color: "brand.1",
+	transition: "all 0.5s ease-out",
 	_hover: {
+		bg: "brand.4",
+		color: "brand.1"
+	},
+	_active: {
 		bg: "brand.4",
 		color: "brand.1"
 	}
@@ -84,7 +121,11 @@ const outlineBrand1 = (props: StyleFunctionProps) => ({
 const link = (props: StyleFunctionProps) => ({
 	variant: "ghost",
 	color: "grey.0",
+	transition: "all 0.5s ease-out",
 	_hover: {
+		bg: "grey.8"
+	},
+	_active: {
 		bg: "grey.8"
 	}
 });
@@ -92,7 +133,11 @@ const link = (props: StyleFunctionProps) => ({
 const alert = (props: StyleFunctionProps) => ({
 	bg: "feedback.alert3",
 	color: "feedback.alert1",
+	transition: "all 0.5s ease-out",
 	_hover: {
+		bg: "feedback.alert2"
+	},
+	_active: {
 		bg: "feedback.alert2"
 	}
 });
@@ -100,7 +145,11 @@ const alert = (props: StyleFunctionProps) => ({
 const sucess = (props: StyleFunctionProps) => ({
 	bg: "feedback.sucess3",
 	color: "feedback.sucess1",
+	transition: "all 0.5s ease-out",
 	_hover: {
+		bg: "feedback.sucess2"
+	},
+	_active: {
 		bg: "feedback.sucess2"
 	}
 });

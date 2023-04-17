@@ -1,4 +1,4 @@
-import { chakra, ComponentStyleConfig } from "@chakra-ui/react";
+import { ComponentStyleConfig } from "@chakra-ui/react";
 
 const Text: ComponentStyleConfig = {
 	sizes: {
