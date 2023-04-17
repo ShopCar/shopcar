@@ -1,18 +1,16 @@
 import { Flex } from "@chakra-ui/layout";
-import { Divider, HStack, Stack } from "@chakra-ui/react";
 import { useColorModeValue } from "@chakra-ui/color-mode";
 
-import NavBar from "../NavBar";
 import Logo from "../Logo";
+import NavBar from "../NavBar";
 
 const Header = () => {
 	const px = {
-		xs: "16px",
-		sm: "16px",
+		base: "16px",
 		md: "30px",
-		xl: "60px",
-		"2xl": "60px"
+		xl: "60px"
 	};
+
 	return (
 		<>
 			<Flex

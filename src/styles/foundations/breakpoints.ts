@@ -1,4 +1,5 @@
 const breakpoints = {
+	ss: "17.5em",
 	xs: "20em",
 	sm: "30em",
 	md: "48em",

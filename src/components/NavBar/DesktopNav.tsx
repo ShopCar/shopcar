@@ -3,16 +3,17 @@ import { Flex } from "@chakra-ui/react";
 import NavLink from "../NavLink";
 
 const DesktopNav = () => {
+	const dpFlex = ["none", "none", "none", "none", "flex", "flex", "flex"];
+
 	return (
 		<>
 			<Flex
-				display={["none", "none", "flex", "flex", "flex"]}
+				display={dpFlex}
 				align="center"
 				justifyContent="space-between"
-				gap="10"
+				gap="8"
 				py="2"
-				pl="8"
-				w={{ sm: "61%", md: "45%", lg: "30%", "2xl": "30%" }}
+				pl="2"
 			>
 				<NavLink path="/login" type="router">
 					Fazer Login

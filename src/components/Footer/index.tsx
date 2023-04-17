@@ -1,24 +1,17 @@
 import { Box, Flex, Image, Text } from "@chakra-ui/react";
 
-import ScrollToTop from "../ScrollToTop";
-
 import whiteLogo from "../../assets/logoW.png";
 
 const Footer = () => {
 	const hFlex = {
-		xs: "210px",
-		sm: "210px",
-		md: "100px",
-		xl: "100px",
-		"2xl": "100px"
+		base: "150px",
+		md: "100px"
 	};
 
 	const pxFlex = {
-		xs: "16px",
-		sm: "16px",
+		base: "16px",
 		md: "30px",
-		xl: "60px",
-		"2xl": "60px"
+		xl: "60px"
 	};
 
 	return (
@@ -30,11 +23,8 @@ const Footer = () => {
 					align="center"
 					justifyContent="space-evenly"
 					flexDirection={{
-						xs: "column",
-						sm: "column",
-						md: "row",
-						xl: "row",
-						"2xl": "row"
+						base: "column",
+						md: "row"
 					}}
 				>
 					<Box>
@@ -47,13 +37,12 @@ const Footer = () => {
 						/>
 					</Box>
 					<Flex justifyContent="center" w="full">
-						<Text size="2" variant="400" color="white">
+						<Text size="2" variant="400" color="white" textAlign="center">
 							© 2023 ShopCar. All rights reserved
 						</Text>
 					</Flex>
 				</Flex>
 			</Box>
-			<ScrollToTop />
 		</>
 	);
 };

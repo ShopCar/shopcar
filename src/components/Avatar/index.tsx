@@ -1,36 +1,18 @@
-import { Avatar, useChakra, Text, HStack } from "@chakra-ui/react";
+import { Avatar, VStack, Heading } from "@chakra-ui/react";
 
-const AvatarProfile = () => {
-	const { theme } = useChakra();
+import { iAvatarProps } from "../../types/compoments";
 
-	const colors = Object.keys(theme.colors.profile);
-	const randomIndex = randomNumber(colors.length);
-
-	const profileColor = `profile.${colors[randomIndex]}`;
-
+const AvatarProfile = ({ name, color }: iAvatarProps) => {
 	return (
 		<>
-			<Avatar
-				name="Vivy Ribeiro"
-				size="sm"
-				backgroundColor={`${profileColor}`}
-			></Avatar>
-			<HStack gap="8px">
-				<Avatar
-					name="Vivy Ribeiro"
-					size="sm"
-					backgroundColor={profileColor}
-				></Avatar>
-				<Text size="2" variant="500">
-					Anunciante
-				</Text>
-			</HStack>
+			<VStack gap="8px">
+				<Avatar name={name} size="lg" backgroundColor={color}></Avatar>
+				<Heading as="h3" size="6" variant="500">
+					{name}
+				</Heading>
+			</VStack>
 		</>
 	);
 };
 
-const randomNumber = (max: number) => {
-	return Math.floor(Math.random() * max + 1);
-};
-
-export default AvatarProfile;
+export { AvatarProfile };

@@ -1,17 +1,17 @@
 import { useState } from "react";
 
-import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import {
+	Input,
 	Button,
+	FormLabel,
+	InputGroup,
 	FormControl,
 	FormErrorMessage,
-	FormLabel,
-	Input,
-	InputGroup,
 	InputRightElement
 } from "@chakra-ui/react";
+import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 
-import { iInputProps } from "../../types/input.type";
+import { iInputProps } from "../../types/compoments";
 
 const InputForm = ({
 	id,

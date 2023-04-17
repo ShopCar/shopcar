@@ -2,6 +2,7 @@ import { ComponentStyleConfig, defineStyle } from "@chakra-ui/react";
 
 const outline = defineStyle({
 	borderColor: "grey.7",
+	transition: "all 0.5s ease-out",
 	_hover: {
 		backgroundColor: "grey.8"
 	},
