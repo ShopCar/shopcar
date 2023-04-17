@@ -1,13 +1,12 @@
 import {
 	Stack,
 	Flex,
-	Button,
 	Text,
 	VStack,
-	useBreakpointValue,
-	Heading
+	Heading,
+	useBreakpointValue
 } from "@chakra-ui/react";
-// ./src/assets/banner.png
+
 const Banner = () => {
 	return (
 		<Flex

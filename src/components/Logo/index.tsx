@@ -4,18 +4,21 @@ import { Image } from "@chakra-ui/image";
 
 import whiteLogo from "../../assets/logoW.png";
 import defaultLogo from "../../assets/logoP.png";
+import NavLink from "../NavLink";
 
 const Logo = () => {
 	const { colorMode } = useColorMode();
 
 	return (
 		<Box py="16px">
-			<Image
-				src={colorMode == "dark" ? whiteLogo : defaultLogo}
-				h="45px"
-				alt="ShopCar Logo"
-				title="ShopCar"
-			/>
+			<NavLink path="/" type="router">
+				<Image
+					src={colorMode == "dark" ? whiteLogo : defaultLogo}
+					h="50px"
+					alt="ShopCar Logo"
+					title="ShopCar"
+				/>
+			</NavLink>
 		</Box>
 	);
 };

@@ -9,15 +9,16 @@ const standard = defineStyle({
 	},
 	_hover: {
 		color: "brand.1!important",
-		textDecoration: "none"
-	},
-	transition: "all 0.2 easy-in-out"
+		textDecoration: "none",
+		transition: "all 0.2 easy-in-out"
+	}
 });
 
 const outline = defineStyle({
-	w: "133px",
-	h: "48px",
-	py: "10px",
+	minW: "133px",
+	maxW: "19rem",
+	h: "42px",
+	py: "8px",
 	color: "grey.0",
 	fontSize: "16px",
 	textAlign: "center",
