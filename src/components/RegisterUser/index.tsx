@@ -1,4 +1,4 @@
-import { Box, Button, Heading } from "@chakra-ui/react";
+import { Box, Button, Flex, Heading } from "@chakra-ui/react";
 import InputForm from "../Input";
 import { TypeOf, z } from "zod";
 import { useForm } from "react-hook-form";
@@ -27,7 +27,9 @@ const RegisterUser = () => {
   const formSchame = z.object({
     name: z.string(),
     email: z.string().email(),
-    cpf: z.number().min(11).max(11),
+    cpf: z.string().min(11).max(11),
+    password: z.string(),
+    passwordRepeat: z.string(),
     phone: z
       .string()
       .min(11)
@@ -47,7 +49,9 @@ const RegisterUser = () => {
     formState: { errors },
   } = useForm<iUserRegister>({ resolver: zodResolver(formSchame) });
 
-  const onSubmit = async () => {};
+  const onSubmit = async (data: any) => {
+    console.log(data);
+  };
 
   return (
     <>
@@ -81,15 +85,15 @@ const RegisterUser = () => {
           error={errors.email}
         />
         <InputForm
-          id="2"
-          type="text"
+          id="3"
+          type="number"
           label="CPF"
           placeholder="000.000.000-00"
           register={register("cpf")}
           error={errors.cpf}
         />
         <InputForm
-          id="2"
+          id="4"
           type="text"
           label="Celular"
           placeholder="(DDD) 98765-4321"
@@ -97,14 +101,105 @@ const RegisterUser = () => {
           error={errors.phone}
         />
         <InputForm
-          id="2"
-          type="date"
+          id="5"
+          type="datetime"
           label="Data de Nascimento"
-          placeholder="00/00/00"
+          placeholder="00/00/0000"
           register={register("birthdate")}
           error={errors.birthdate}
         />
-        <Button variant={"alert"} size={"2"}>
+        <InputForm
+          id="6"
+          type="text"
+          label="Descrição"
+          placeholder="Digitar descrição"
+          register={register("description")}
+          error={errors.description}
+        />
+        <Heading as="h4" size={"9"} variant={"500"}>
+          Informações de endereço
+        </Heading>
+        <InputForm
+          id="7"
+          type="number"
+          label="CEP"
+          placeholder="00000.000"
+          register={register("address.zipCode")}
+          error={errors.address?.zipCode}
+        />
+        <Flex>
+          <InputForm
+            id="8"
+            type="text"
+            label="Estado"
+            placeholder="Digitar Estado"
+            register={register("address.state")}
+            error={errors.address?.state}
+          />
+          <InputForm
+            id="9"
+            type="text"
+            label="Cidade"
+            placeholder="Digitar cidade"
+            register={register("address.city")}
+            error={errors.address?.city}
+          />
+        </Flex>
+        <InputForm
+          id="10"
+          type="text"
+          label="Rua"
+          placeholder="Digitar rua"
+          register={register("address.street")}
+          error={errors.address?.street}
+        />
+        <Flex>
+          <InputForm
+            id="11"
+            type="number"
+            label="numero"
+            placeholder="Digitar numero"
+            register={register("address.number")}
+            error={errors.address?.number}
+          />
+          <InputForm
+            id="12"
+            type="text"
+            label="Complemento"
+            placeholder="Ex. apart 307"
+            register={register("address.complement")}
+            error={errors.address?.complement}
+          />
+        </Flex>
+        <Heading as="h4" size={"9"} variant={"500"}>
+          Tipo da conta
+        </Heading>
+        <Flex justifyContent={"space-between"}>
+          <Button variant={"alert"} size={"2"}>
+            Comprador
+          </Button>{" "}
+          <Button variant={"alert"} size={"2"}>
+            Anuciante
+          </Button>
+        </Flex>
+        <InputForm
+          id="13"
+          type="password"
+          label="Senha"
+          placeholder="Digitar senha"
+          register={register("password")}
+          error={errors.password}
+        />
+        <InputForm
+          id="14"
+          type="password"
+          label="Confirmar Senha"
+          placeholder="Digite novamente a senha"
+          register={register("passwordRepeat")}
+          error={errors.passwordRepeat}
+        />
+
+        <Button onClick={handleSubmit(onSubmit)} variant={"alert"} size={"2"}>
           Cadastrar
         </Button>
       </Box>
