@@ -12,6 +12,7 @@ const outline = definePartsStyle({
 		bg: "transparent",
 		border: "1.5px solid",
 		borderColor: "grey.7!important",
+		transition: "all 0.5s ease-out",
 		_hover: {
 			backgroundColor: "grey.8",
 			borderColor: "brand.2!important"

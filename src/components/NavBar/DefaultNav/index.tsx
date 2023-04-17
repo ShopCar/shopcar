@@ -1,13 +1,12 @@
-import DesktopNav from "../DesktopNav";
+import { useGlobalContext } from "../../../contexts/globalContext";
+
 import MobileNav from "../MobileNav";
+import DesktopNav from "../DesktopNav";
 
 const DefaultNav = () => {
-	return (
-		<>
-			<DesktopNav />
-			<MobileNav />
-		</>
-	);
+	const { windowSize } = useGlobalContext();
+
+	return <>{windowSize.innerWidth < 768 ? <MobileNav /> : <DesktopNav />}</>;
 };
 
 export default DefaultNav;

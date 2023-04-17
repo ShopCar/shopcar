@@ -1,14 +1,15 @@
 import { CloseIcon, HamburgerIcon } from "@chakra-ui/icons";
 import {
 	Flex,
+	VStack,
+	Divider,
 	Popover,
 	IconButton,
 	PopoverBody,
 	useDisclosure,
 	PopoverTrigger,
 	PopoverContent,
-	useColorModeValue,
-	Divider
+	useColorModeValue
 } from "@chakra-ui/react";
 
 import NavLink from "../NavLink";
@@ -16,34 +17,31 @@ import NavLink from "../NavLink";
 const MobileNav = () => {
 	const { isOpen, onClose, onOpen } = useDisclosure();
 
+	const dpFlex = ["flex", "flex", "flex", "flex", "none", "none", "none"];
+
 	return (
 		<Popover isOpen={isOpen} onOpen={onOpen} onClose={onClose} isLazy={true}>
 			<PopoverTrigger>
 				<IconButton
 					aria-label="Abrir menu"
-					size="md"
-					icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
-					display={["flex", "flex", "none", "none"]}
+					size="sm"
+					icon={
+						isOpen ? <CloseIcon boxSize={4} /> : <HamburgerIcon boxSize={5} />
+					}
+					display={dpFlex}
 				/>
 			</PopoverTrigger>
 			<PopoverContent
-				mt="3px"
+				w="16rem"
+				mt="6px"
+				py="6"
 				borderRadius="none"
 				borderTop="none"
 				borderTopColor={useColorModeValue("grey.7", "grey.2")}
+				backgroundColor={useColorModeValue("grey.10", "grey.1")}
 			>
-				<PopoverBody
-					px="2"
-					backgroundColor={useColorModeValue("grey.10", "grey.1")}
-				>
-					<Flex
-						gap="2"
-						h="sm"
-						overflow="hidden"
-						justifyContent="space-evenly"
-						flexDirection="column"
-						borderRadius="none"
-					>
+				<PopoverBody>
+					<Flex gap="8" h="min-content" flexDirection="column">
 						<NavLink path="cars" type="section">
 							Carros
 						</NavLink>

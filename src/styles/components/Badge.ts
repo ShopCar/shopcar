@@ -1,8 +1,4 @@
-import {
-	defineStyle,
-	ComponentStyleConfig,
-	defineStyleConfig
-} from "@chakra-ui/react";
+import { defineStyle, ComponentStyleConfig } from "@chakra-ui/react";
 
 const solid = defineStyle({
 	bg: "brand.1",
