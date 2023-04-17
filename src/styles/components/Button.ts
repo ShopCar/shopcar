@@ -152,12 +152,12 @@ const Button: ComponentStyleConfig = {
 		outlineLight,
 		outlineBrand1,
 		brandDisable,
-		default: { ...standard }
+		standard
 	},
 
 	defaultProps: {
 		size: "big",
-		variant: "default"
+		variant: "standard"
 	}
 };
 
