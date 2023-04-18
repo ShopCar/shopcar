@@ -6,7 +6,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import api from "../../services/api";
 import { useState } from "react";
 import { useToastForm } from "../../contexts/toastContext";
-import { AxiosError } from "axios";
 
 const RegisterUser = () => {
   const { toast } = useToastForm();
@@ -14,44 +13,45 @@ const RegisterUser = () => {
   const addressFormSchame = z.object({
     zipCode: z
       .string()
-      .length(8)
-      .regex(/^[0-9]+$/, "Zip Code must contain only numbers"),
+      .length(8, "O CEP deve conter exatamente 8 caracteres")
+      .regex(/^[0-9]+$/, "O CEP deve conter apenas números"),
     state: z
       .string()
-      .length(2)
-      .regex(/^[A-Za-z]+$/),
-    city: z.string().max(50),
-    district: z.string().max(50),
-    street: z.string().max(50),
+      .length(2, "O Estado deve conter 2 caracteres")
+      .regex(/^[A-Za-z]+$/, "Deve conter apenas letras"),
+    city: z.string().min(1, "Digite sua cidade").max(50),
+    district: z.string().min(1, "Digite seu bairro").max(50),
+    street: z.string().min(1, "Digite sua rua").max(50),
     number: z
       .string()
-      .max(10)
-      .regex(/^[0-9]+$/, "Phone number must contain only numbers")
+      .min(1, "Digite o numero")
+      .max(10, "Maximo 10 números")
+      .regex(/^[0-9]+$/, "Insira apenas números")
       .nullish(),
     complement: z.string().max(50).nullish(),
   });
 
   const formSchame = z
     .object({
-      name: z.string(),
-      email: z.string().email(),
-      cpf: z.string().min(11).max(11),
+      name: z.string().min(1, "Insira seu nome"),
+      email: z.string().email("Digite um email válido"),
+      cpf: z.string().length(11, "CPF deve conter 11 números"),
       password: z
         .string()
-        .min(8)
-        .regex(
-          /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
-          "Password must contains capital letter, lowercase letter, number and special char"
-        ),
+        .min(8, "Senha deve conter no mínimo 8 caracteres")
+        .regex(/[A-Z]/, "Senha deve conter ao menos uma letra maiúscula")
+        .regex(/[a-z]/, "Senha deve conter ao menos uma letra minúscula")
+        .regex(/[0-9]/, "Senha deve conter ao menos um número")
+        .regex(/(\W)|_/, "Senha deve conter ao menos um caracter especial"),
       passwordRepeat: z.string(),
       phone: z
         .string()
-        .min(11)
-        .max(11)
+        .min(10, "Deve conter no mínimo 10 nuúmeros")
+        .max(11, "Deve conter no máximo 11 nuúmeros")
         .regex(/^[0-9]+$/, "Phone number must contain only numbers"),
       birthdate: z.string(),
       description: z.string().nullish(),
-      isSeller: z.boolean(),
+      isSeller: z.boolean().default(false),
       address: addressFormSchame,
     })
     .refine((data) => data.password === data.passwordRepeat, {
@@ -99,13 +99,15 @@ const RegisterUser = () => {
   };
 
   return (
-    <>
-      <Box
-        marginTop={46}
-        borderWidth="1px"
+    <Box bg="white" my={"46px"}>
+      <Flex
         borderRadius="lg"
-        minWidth={343}
-        maxWidth={411}
+        minWidth={"343px"}
+        maxWidth={"411px"}
+        py={"44px"}
+        px={"48px"}
+        flexDirection={"column"}
+        gap={"16px"}
       >
         <Heading as="h3" size={"8"} variant={"500"}>
           Cadastro
@@ -172,7 +174,7 @@ const RegisterUser = () => {
           register={register("address.zipCode")}
           error={errors.address?.zipCode}
         />
-        <Flex>
+        <Flex gap={"11px"}>
           <InputForm
             id="8"
             type="text"
@@ -196,7 +198,7 @@ const RegisterUser = () => {
           label="Bairro"
           placeholder="Digitar bairro"
           register={register("address.district")}
-          error={errors.address?.street}
+          error={errors.address?.district}
         />
         <InputForm
           id="12"
@@ -206,7 +208,7 @@ const RegisterUser = () => {
           register={register("address.street")}
           error={errors.address?.street}
         />
-        <Flex>
+        <Flex gap={"11px"}>
           <InputForm
             id="13"
             type="number"
@@ -227,8 +229,9 @@ const RegisterUser = () => {
         <Heading as="h4" size={"9"} variant={"500"}>
           Tipo da conta
         </Heading>
-        <Flex justifyContent={"space-between"}>
+        <Flex gap={"11px"}>
           <Button
+            w={"full"}
             variant={isUserSeller ? "outline1" : "brand1"}
             size={"2"}
             value={"false"}
@@ -240,6 +243,7 @@ const RegisterUser = () => {
             Comprador
           </Button>
           <Button
+            w={"full"}
             variant={isUserSeller ? "brand1" : "outline1"}
             size={"2"}
             value={"true"}
@@ -268,11 +272,16 @@ const RegisterUser = () => {
           error={errors.passwordRepeat}
         />
 
-        <Button onClick={handleSubmit(onSubmit)} variant={"brand1"} size={"2"}>
+        <Button
+          onClick={handleSubmit(onSubmit)}
+          variant={"brand1"}
+          size={"2"}
+          w="full"
+        >
           Cadastrar
         </Button>
-      </Box>
-    </>
+      </Flex>
+    </Box>
   );
 };
 
