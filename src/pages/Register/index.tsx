@@ -1,12 +1,12 @@
-import { Heading, VStack } from "@chakra-ui/layout";
+import { Heading, Flex, VStack } from "@chakra-ui/layout";
 import RegisterUser from "../../components/RegisterUser";
 
 const Register = () => {
   return (
     <VStack gap="4" minHeight={"150vh"} pt="60px">
-      <Heading>
+      <Flex w="full" justifyContent={"center"} bg="gray.100">
         <RegisterUser />
-      </Heading>
+      </Flex>
     </VStack>
   );
 };
