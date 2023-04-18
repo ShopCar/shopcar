@@ -1,8 +1,8 @@
 import {
-    Route,
-    RouterProvider,
-    createBrowserRouter,
-    createRoutesFromElements,
+  Route,
+  RouterProvider,
+  createBrowserRouter,
+  createRoutesFromElements,
 } from "react-router-dom";
 
 import { Heading } from "@chakra-ui/react";
@@ -19,42 +19,34 @@ import CarLayout from "../layouts/CarLayout";
 import RootLayout from "../layouts/RootLayout";
 
 import ProtectRoutes from "../components/ProtectRoutes";
-import { LoginProvider } from "../contexts/loginContext";
 
 const MainRoutes = () => {
-    const router = createBrowserRouter(
-        createRoutesFromElements(
-            <Route
-                path="/"
-                element={<RootLayout />}
-                errorElement={<Heading>"Oops, Algo deu errado!🤷"</Heading>}
-            >
-                <Route index element={<Home />} />
-                <Route
-                    path="login"
-                    element={
-                        <LoginProvider>
-                            <Login />
-                        </LoginProvider>
-                    }
-                />
-                <Route path="register" element={<Register />} />
+  const router = createBrowserRouter(
+    createRoutesFromElements(
+      <Route
+        path="/"
+        element={<RootLayout />}
+        errorElement={<Heading>"Oops, Algo deu errado!🤷"</Heading>}
+      >
+        <Route index element={<Home />} />
+        <Route path="login" element={<Login />} />
+        <Route path="register" element={<Register />} />
 
-                <Route path="cars" element={<CarLayout />}>
-                    <Route path=":id" element={<CarDetail />}></Route>
-                </Route>
+        <Route path="cars" element={<CarLayout />}>
+          <Route path=":id" element={<CarDetail />}></Route>
+        </Route>
 
-                <Route element={<ProtectRoutes />}>
-                    <Route path="dashboard" element={<Dashboard />} />
-                    <Route path="profile" element={<Profile />} />
-                </Route>
+        <Route element={<ProtectRoutes />}>
+          <Route path="dashboard" element={<Dashboard />} />
+          <Route path="profile" element={<Profile />} />
+        </Route>
 
-                <Route path="*" element={<NotFound />} />
-            </Route>
-        )
-    );
+        <Route path="*" element={<NotFound />} />
+      </Route>
+    )
+  );
 
-    return <RouterProvider router={router} />;
+  return <RouterProvider router={router} />;
 };
 
 export default MainRoutes;
