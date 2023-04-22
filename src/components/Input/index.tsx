@@ -17,9 +17,11 @@ const InputForm = ({
     id,
     type,
     label,
+    value,
     error,
     register,
     placeholder,
+    readOnly,
 }: iInputProps) => {
     const fieldError = error != undefined;
     const [showPassword, setShowPassword] = useState(false);
@@ -59,6 +61,8 @@ const InputForm = ({
                 <FormControl id={id} isInvalid={fieldError}>
                     <FormLabel color="grey.1">{label}</FormLabel>
                     <Input
+                        value={value && value}
+                        readOnly={readOnly? readOnly : false}
                         type={type}
                         placeholder={placeholder}
                         {...register}

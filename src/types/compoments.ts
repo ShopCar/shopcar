@@ -1,4 +1,4 @@
-import { FieldError, UseFormRegisterReturn } from "react-hook-form";
+import { FieldError, Merge, UseFormRegisterReturn } from "react-hook-form";
 
 import { mandatoryChildren } from "./childrenProps";
 
@@ -12,12 +12,19 @@ export interface iInputProps {
 	id: string;
 	type: string;
 	label: string;
+	value?: string | number;
+	readOnly?: boolean;
 	placeholder: string;
-	error: FieldError | undefined;
+	error: FieldError | undefined | Merge<FieldError, (FieldError | undefined)[]>
 	register: UseFormRegisterReturn<string>;
 }
 
 export interface iAvatarProps {
 	name: string;
 	color?: string;
+}
+
+export interface iRegisterCarModal {
+	isOpen: boolean;
+	setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }

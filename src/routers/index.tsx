@@ -35,10 +35,11 @@ const MainRoutes = () => {
         <Route path="cars" element={<CarLayout />}>
           <Route path=":id" element={<CarDetail />}></Route>
         </Route>
+        
+        <Route path="profile/:id" element={<Profile />} />
 
         <Route element={<ProtectRoutes />}>
           <Route path="dashboard" element={<Dashboard />} />
-          <Route path="profile" element={<Profile />} />
         </Route>
 
         <Route path="*" element={<NotFound />} />
