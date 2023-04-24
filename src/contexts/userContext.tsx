@@ -20,6 +20,7 @@ export const UserProvider = ({ children }: any) => {
     const login = async (data: iLoginForm) => {
         try {
             const response = await api.post("/login", data);
+
             setUser(response.data.user);
             setToken(response.data.token);
             localStorage.setItem("token@shopCar", response.data.token)
