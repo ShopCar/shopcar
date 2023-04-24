@@ -89,6 +89,7 @@ const RegisterUser = () => {
         });
       }
     } catch (error: any) {
+      console.log(error);
       toast({
         title: "error",
         message: `${error.response.data.message}`,
