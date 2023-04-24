@@ -10,6 +10,7 @@ import {
 import AvatarTag from "../Avatar/AvatarTag";
 
 interface iPropertyProps {
+	id?: string;
 	km: string;
 	year: number;
 	imageUrl: string;
@@ -21,6 +22,7 @@ interface iPropertyProps {
 }
 
 const ProductCard = ({
+	id,
 	km,
 	year,
 	imageUrl,

@@ -1,3 +1,5 @@
+import { iUser } from "./user.type";
+
 export interface iGlobalContextProps {
     isVisible: boolean;
     windowSize: {
@@ -12,4 +14,6 @@ export interface iLoginForm {
 
 export interface iUserContextProps {
     login: (data: iLoginForm) => Promise<void>;
+    user: iUser | null;
+    setUser: React.Dispatch<React.SetStateAction<iUser | null>>;
 }

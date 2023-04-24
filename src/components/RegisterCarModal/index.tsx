@@ -33,7 +33,6 @@ const RegisterCarModal = ({isOpen, setIsOpen}: iRegisterCarModal) => {
 
   const { brands, cars, setCars, getCarsByBrand} = useCarContext()
   const [car, setCar] = useState<iCar | null>(cars? cars[0] : null)
-  const [isUserSeller, setIsUserSeller] = useState(false);
   const [imgCount, setImgCount] = useState([0, 1])
 
   useEffect(() => {
@@ -61,7 +60,7 @@ const RegisterCarModal = ({isOpen, setIsOpen}: iRegisterCarModal) => {
 
   const onSubmit = async (data: any) => {
     try {
-      const token = "token"//pegar token do localStorage
+      const token = localStorage.getItem("token@shopCar")
       const resp = await api.post("/cars", {
         ...data,
         km: Number(data.km),
@@ -78,6 +77,7 @@ const RegisterCarModal = ({isOpen, setIsOpen}: iRegisterCarModal) => {
           position: "top-left",
           color: "green.500",
         });
+        setIsOpen(false)
       } else {
         toast({
           title: "error",
