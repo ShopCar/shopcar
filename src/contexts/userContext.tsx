@@ -19,8 +19,7 @@ export const UserProvider = ({ children }: any) => {
     const login = async (data: iLoginForm) => {
         try {
             const response = await api.post("/login", data);
-            console.log(response.data);
-            
+
             setUser(response.data.user);
             setToken(response.data.token);
         } catch (error) {

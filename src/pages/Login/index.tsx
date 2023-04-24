@@ -1,19 +1,27 @@
+import { z } from "zod";
 import { useForm } from "react-hook-form";
-import InputForm from "../../components/Input";
 import NavLink from "../../components/NavLink";
+import InputForm from "../../components/Input";
 import { VStack, Text } from "@chakra-ui/layout";
-import { iLoginForm } from "../../types/contexts.type";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Flex, Heading } from "@chakra-ui/react";
 import { useUserContext } from "../../contexts/userContext";
 
 const Login = () => {
     const { login } = useUserContext();
 
+    const formLoginSchame = z.object({
+        email: z.string().email("Digite um email válido"),
+        password: z.string(),
+    });
+
+    type iUserLogin = z.infer<typeof formLoginSchame>;
+
     const {
         register,
         handleSubmit,
         formState: { errors },
-    } = useForm<iLoginForm>();
+    } = useForm<iUserLogin>({ resolver: zodResolver(formLoginSchame) });
 
     return (
         <VStack
