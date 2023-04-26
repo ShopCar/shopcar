@@ -2,7 +2,7 @@ import { Dispatch, SetStateAction, createContext, useContext, useState } from "r
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import carsApi from "../services/carsApi";
 import { AxiosResponse } from "axios";
-import { iCar, iCarsBrands } from "../types/cars.type";
+import { iCar, iCarsBrands, icarResponse } from "../types/cars.type";
 
 export const CarContext = createContext({} as iCarContextProps);
 interface iCarContextProps{
@@ -12,6 +12,8 @@ interface iCarContextProps{
 	setBrands: Dispatch<SetStateAction<string[] | null>>
 	getCarsBrands: () => Promise<string[]>;
 	getCarsByBrand: (brand: string) => Promise<iCar[]>;
+	allCars: icarResponse[] | null;
+	setAllCars: Dispatch<SetStateAction<icarResponse[] | null>>
 }
 export const CarProvider = ({ children }: any) => {
 
@@ -20,6 +22,7 @@ export const CarProvider = ({ children }: any) => {
 	const pathParams = useParams();
 	const [cars, setCars] = useState<Array<iCar>|null>(null)
 	const [brands, setBrands] = useState<Array<string>|null>(null)
+	const [allCars, setAllCars] = useState<icarResponse[] | null>(null)
 
 	const getCarsBrands = async () => {
 		const response: AxiosResponse<iCarsBrands> = await carsApi("");
@@ -30,7 +33,7 @@ export const CarProvider = ({ children }: any) => {
 		return response.data
 	}
 
-	return <CarContext.Provider value={{cars, setCars, brands, setBrands, getCarsBrands, getCarsByBrand}}>{children}</CarContext.Provider>;
+	return <CarContext.Provider value={{cars, setCars, brands, setBrands, allCars, setAllCars, getCarsBrands, getCarsByBrand}}>{children}</CarContext.Provider>;
 };
 
 export const useCarContext = () => useContext(CarContext);

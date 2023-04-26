@@ -8,6 +8,7 @@ import {
 } from "@chakra-ui/react";
 
 import AvatarTag from "../Avatar/AvatarTag";
+import { Navigate, useNavigate } from "react-router-dom";
 
 interface iPropertyProps {
 	id?: string;
@@ -33,6 +34,7 @@ const ProductCard = ({
 	formattedPrice,
 	padding
 }: iPropertyProps) => {
+	const navigate = useNavigate()
 	const boxCardConfig = {
 		"&:hover": {
 			cursor: "pointer",
@@ -45,16 +47,19 @@ const ProductCard = ({
 
 	return (
 		<Box
+			id={id}
 			gap="16px"
 			width="270px"
-			height="350px"
+			height="400px"
 			display="flex"
 			flexDir="column"
 			overflow="hidden"
 			sx={boxCardConfig}
 			padding={padding}
+			onClick={() => navigate(`/cars/${id}`)}
 		>
 			<Box
+				as="figure"
 				maxW="100%"
 				display="flex"
 				height="152px"
@@ -65,11 +70,11 @@ const ProductCard = ({
 			>
 				<Image maxW="262px" src={imageUrl} alt={imageAlt} />
 			</Box>
-			<Heading size="7" variant="600">
+			<Heading size="7" variant="600" h="20px" textOverflow="ellipsis" overflow="hidden" whiteSpace="nowrap">
 				{carTitle}
 			</Heading>
 
-			<Text size="2" variant="400">
+			<Text size="2" variant="400" h="48px" display="flex" alignItems="center" textOverflow="ellipsis" whiteSpace="nowrap" overflow="hidden">
 				{carDescription}
 			</Text>
 

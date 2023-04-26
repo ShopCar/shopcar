@@ -2,7 +2,6 @@ import {
 	Flex,
 	VStack,
 	Button,
-	Heading,
 	useColorModeValue,
 	Grid,
 	GridItem,
@@ -10,14 +9,14 @@ import {
 	Box
 } from "@chakra-ui/react";
 
-import apiCars from "../../data/apiCarsData";
-import property from "../../data/cardCarData";
 
 import Banner from "../../components/Banner";
 import CarFilter from "../../components/CarFilter";
 import ProductCard from "../../components/ProductCard";
-import NavLink from "../../components/NavLink";
 import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
+import { useCarContext } from "../../contexts/carContext";
+import { useEffect } from "react";
+import api from "../../services/api";
 
 const Home = () => {
 	const pxFlex = {
@@ -25,6 +24,17 @@ const Home = () => {
 		md: "30px",
 		xl: "60px"
 	};
+
+	const {allCars, setAllCars} = useCarContext()
+
+	useEffect(() => {
+		const getInicialData = async () => {
+			const {data} = await api("/cars");
+			setAllCars(data)
+			console.log(data)
+		}
+		getInicialData()
+	},[])
 
 	const justifyFlex = { base: "center", sm: "flex-start" };
 
@@ -60,8 +70,8 @@ const Home = () => {
 						justifyContent={justifyFlex}
 						gap={{ base: "1.75rem", lg: "2.25rem" }}
 					>
-						{apiCars.map((_, index) => (
-							<ProductCard {...property} key={index} />
+						{allCars && allCars.map((item) => (
+							<ProductCard padding="3rem 0 0 0" id={item.id} km={item.km} year={Number(item.year)} imageUrl={item.images.cover} imageAlt={item.model} carTitle={item.model} carDescription={item.description? item.description : "Anúncio sem descrição"} formattedPrice={Number(item.price).toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })} key={item.id} />
 						))}
 					</Flex>
 
