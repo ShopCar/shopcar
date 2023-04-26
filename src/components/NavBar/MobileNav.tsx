@@ -19,6 +19,9 @@ const MobileNav = () => {
 
 	const dpFlex = ["flex", "flex", "flex", "flex", "none", "none", "none"];
 
+	const pcBC = useColorModeValue("grey.7", "grey.2");
+	const pcBG = useColorModeValue("grey.10", "grey.1");
+
 	return (
 		<Popover isOpen={isOpen} onOpen={onOpen} onClose={onClose} isLazy={true}>
 			<PopoverTrigger>
@@ -37,8 +40,8 @@ const MobileNav = () => {
 				py="6"
 				borderRadius="none"
 				borderTop="none"
-				borderTopColor={useColorModeValue("grey.7", "grey.2")}
-				backgroundColor={useColorModeValue("grey.10", "grey.1")}
+				borderTopColor={pcBC}
+				backgroundColor={pcBG}
 			>
 				<PopoverBody>
 					<Flex gap="8" h="min-content" flexDirection="column">

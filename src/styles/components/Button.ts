@@ -122,9 +122,9 @@ const link = (props: StyleFunctionProps) => ({
 	variant: "ghost",
 	color: "grey.0",
 	transition: "all 0.5s ease-out",
-	_hover: {
-		bg: "grey.8"
-	},
+	// _hover: {
+	// 	bg: "grey.8"
+	// },
 	_active: {
 		bg: "grey.8"
 	}
@@ -205,8 +205,8 @@ const Button: ComponentStyleConfig = {
 	},
 
 	defaultProps: {
-		size: "big",
-		variant: "standard"
+		size: "",
+		variant: ""
 	}
 };
 
