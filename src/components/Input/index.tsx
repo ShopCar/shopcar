@@ -1,13 +1,14 @@
 import { useState } from "react";
 
 import {
-	Input,
-	Button,
-	FormLabel,
-	InputGroup,
-	FormControl,
-	FormErrorMessage,
-	InputRightElement
+    Input,
+    Button,
+    FormLabel,
+    InputGroup,
+    FormControl,
+    FormErrorMessage,
+    InputRightElement,
+    useColorModeValue,
 } from "@chakra-ui/react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 
@@ -34,7 +35,9 @@ const InputForm = ({
         <>
             {type == "password" ? (
                 <FormControl id={id} isInvalid={fieldError}>
-                    <FormLabel color="grey.1">{label}</FormLabel>
+                    <FormLabel color={useColorModeValue("grey.1", "white")}>
+                        {label}
+                    </FormLabel>
                     <InputGroup>
                         <Input
                             type={showPassword ? "text" : "password"}
@@ -59,10 +62,12 @@ const InputForm = ({
                 </FormControl>
             ) : (
                 <FormControl id={id} isInvalid={fieldError}>
-                    <FormLabel color="grey.1">{label}</FormLabel>
+                    <FormLabel color={useColorModeValue("grey.1", "white")}>
+                        {label}
+                    </FormLabel>
                     <Input
                         value={value && value}
-                        readOnly={readOnly? readOnly : false}
+                        readOnly={readOnly ? readOnly : false}
                         type={type}
                         placeholder={placeholder}
                         {...register}
