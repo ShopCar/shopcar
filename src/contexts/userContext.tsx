@@ -34,6 +34,7 @@ export const UserProvider = ({ children }: any) => {
         color: "green.500",
       });
       navigate("/dashboard");
+      navigate(0);
     } catch (error: any) {
       console.log(error);
       toast({
