@@ -21,11 +21,16 @@ interface iPropertyProps {
 	formattedPrice: string;
 	carDescription: string;
 	padding?: string
+	owner: {
+		name: string;
+		id: string;
+	}
 }
 
 const ProductCard = ({
 	id,
 	km,
+	owner,
 	year,
 	imageUrl,
 	imageAlt,
@@ -56,7 +61,6 @@ const ProductCard = ({
 			overflow="hidden"
 			sx={boxCardConfig}
 			padding={padding}
-			onClick={() => navigate(`/cars/${id}`)}
 		>
 			<Box
 				as="figure"
@@ -67,10 +71,11 @@ const ProductCard = ({
 				justifyContent="center"
 				borderColor="transparent"
 				bgColor={useColorModeValue("grey.7", "grey.7")}
+				onClick={() => navigate(`/cars/${id}`)}
 			>
 				<Image maxW="262px" src={imageUrl} alt={imageAlt} />
 			</Box>
-			<Heading size="7" variant="600" h="20px" textOverflow="ellipsis" overflow="hidden" whiteSpace="nowrap">
+			<Heading onClick={() => navigate(`/cars/${id}`)} size="7" variant="600" h="20px" textOverflow="ellipsis" overflow="hidden" whiteSpace="nowrap">
 				{carTitle}
 			</Heading>
 
@@ -78,7 +83,7 @@ const ProductCard = ({
 				{carDescription}
 			</Text>
 
-			<AvatarTag name="Samuel Leão" />
+			<AvatarTag name={owner.name} id={owner.id}/>
 
 			<Box maxW="100%" display="flex" justifyContent="space-between">
 				<Box display="flex" gap="12px">

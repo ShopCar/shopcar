@@ -71,7 +71,7 @@ const Dashboard = () => {
 						gap={{ base: "1.75rem", lg: "2.25rem" }}
 					>
 						{allCars && allCars.map((item) => (
-							<ProductCard padding="3rem 0 0 0" id={item.id} km={item.km} year={Number(item.year)} imageUrl={item.images.cover} imageAlt={item.model} carTitle={item.model} carDescription={item.description? item.description : "Anúncio sem descrição"} formattedPrice={Number(item.price).toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })} key={item.id} />
+							<ProductCard owner={{name: item.user.name, id: item.user.id}} padding="3rem 0 0 0" id={item.id} km={item.km} year={Number(item.year)} imageUrl={item.images.cover} imageAlt={item.model} carTitle={item.model} carDescription={item.description? item.description : "Anúncio sem descrição"} formattedPrice={Number(item.price).toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })} key={item.id} />
 						))}
 					</Flex>
 
