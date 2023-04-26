@@ -19,6 +19,7 @@ interface iPropertyProps {
 	sellerName?: string;
 	formattedPrice: string;
 	carDescription: string;
+	padding?: string
 }
 
 const ProductCard = ({
@@ -29,7 +30,8 @@ const ProductCard = ({
 	imageAlt,
 	carTitle,
 	carDescription,
-	formattedPrice
+	formattedPrice,
+	padding
 }: iPropertyProps) => {
 	const boxCardConfig = {
 		"&:hover": {
@@ -50,6 +52,7 @@ const ProductCard = ({
 			flexDir="column"
 			overflow="hidden"
 			sx={boxCardConfig}
+			padding={padding}
 		>
 			<Box
 				maxW="100%"
@@ -74,8 +77,8 @@ const ProductCard = ({
 
 			<Box maxW="100%" display="flex" justifyContent="space-between">
 				<Box display="flex" gap="12px">
-					<Badge variant="opacity">{km}</Badge>
-					<Badge variant="opacity">{year}</Badge>
+					<Badge p="0" variant="opacity">{km}</Badge>
+					<Badge p="0" variant="opacity">{year}</Badge>
 				</Box>
 
 				<Heading size="7" variant="500" marginRight="3px">
