@@ -8,21 +8,21 @@ import defaultLogo from "../../assets/logoP.png";
 import NavLink from "../NavLink";
 
 const Logo = () => {
-	const { colorMode } = useColorMode();
+  const { colorMode } = useColorMode();
 
-	return (
-		<Box>
-			<NavLink path="/" type="router">
-				<Image
-					objectFit="contain"
-					src={colorMode == "dark" ? whiteLogo : defaultLogo}
-					h="50px"
-					alt="ShopCar Logo"
-					title="ShopCar"
-				/>
-			</NavLink>
-		</Box>
-	);
+  return (
+    <Box>
+      <NavLink path="/" type="router">
+        <Image
+          objectFit="contain"
+          src={colorMode == "dark" ? whiteLogo : defaultLogo}
+          h="50px"
+          alt="ShopCar Logo"
+          title="ShopCar"
+        />
+      </NavLink>
+    </Box>
+  );
 };
 
 export default Logo;

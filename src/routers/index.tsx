@@ -23,38 +23,34 @@ import SendResetPasswordEmail from "../pages/ResetPassword/SendResetPasswordEmai
 import UserResetPassword from "../pages/ResetPassword/UserResetPassword";
 
 const MainRoutes = () => {
-	const router = createBrowserRouter(
-		createRoutesFromElements(
-			<Route
-				path="/"
-				element={<RootLayout />}
-				errorElement={<Heading>"Oops, Algo deu errado!🤷"</Heading>}
-			>
-				<Route index element={<Home />} />
-				<Route path="login" element={<Login />} />
-				<Route path="register" element={<Register />} />
+  const router = createBrowserRouter(
+    createRoutesFromElements(
+      <Route
+        path="/"
+        element={<RootLayout />}
+        errorElement={<Heading>"Oops, Algo deu errado!🤷"</Heading>}
+      >
+        <Route index element={<Home />} />
+        <Route path="login" element={<Login />} />
+        <Route path="register" element={<Register />} />
 
-				<Route path="">
-					<Route path="resetPassword/" element={<SendResetPasswordEmail />} />
-					<Route path="resetPassword/:token" element={<UserResetPassword />} />
-				</Route>
+        <Route path="cars" element={<CarLayout />}>
+          <Route path=":id" element={<CarDetail />}></Route>
+        </Route>
 
-				<Route path="cars" element={<CarLayout />}>
-					<Route path=":id" element={<CarDetail />}></Route>
-				</Route>
+        <Route path="profile/:id" element={<Profile />} />
 
-				<Route path="profile/:id" element={<Profile />} />
+        {/* <Route element={<ProtectRoutes />}> */}
+        <Route path="dashboard" element={<Dashboard />} />
+        {/* </Route> */}
 
-				<Route element={<ProtectRoutes />}>
-					<Route path="dashboard" element={<Dashboard />} />
-				</Route>
+        <Route path="*" element={<NotFound />} />
+      </Route>
+    )
+  );
 
-				<Route path="*" element={<NotFound />} />
-			</Route>
-		)
-	);
+  return <RouterProvider router={router} />;
 
-	return <RouterProvider router={router} />;
 };
 
 export default MainRoutes;
