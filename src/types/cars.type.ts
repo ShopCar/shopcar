@@ -20,3 +20,35 @@ export interface iCar {
 	fuel: number
 	value: number
 }
+
+export interface icarResponse{
+	id: string
+	brand: string
+	model: string
+	year: string
+	fuel: string
+	km: string
+	color: string
+	description: string | null
+	isPublished: boolean
+	price: string
+	createdAt: string
+	updatedAt: string
+	user: {
+		id: string
+		name: string
+		birthdate: string
+		phone: string
+		cpf: string
+		description: string | null
+		email: string
+		isSeller: boolean,
+		createdAt: string
+		updatedAt: string
+	}
+	images: {
+		id: string
+		cover: string
+		gallery: string[]
+	}
+}

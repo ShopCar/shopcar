@@ -8,6 +8,7 @@ import {
 } from "@chakra-ui/react";
 
 import AvatarTag from "../Avatar/AvatarTag";
+import { Navigate, useNavigate } from "react-router-dom";
 
 interface iPropertyProps {
 	id?: string;
@@ -20,11 +21,16 @@ interface iPropertyProps {
 	formattedPrice: string;
 	carDescription: string;
 	padding?: string
+	owner: {
+		name: string;
+		id: string;
+	}
 }
 
 const ProductCard = ({
 	id,
 	km,
+	owner,
 	year,
 	imageUrl,
 	imageAlt,
@@ -33,6 +39,7 @@ const ProductCard = ({
 	formattedPrice,
 	padding
 }: iPropertyProps) => {
+	const navigate = useNavigate()
 	const boxCardConfig = {
 		"&:hover": {
 			cursor: "pointer",
@@ -45,9 +52,10 @@ const ProductCard = ({
 
 	return (
 		<Box
+			id={id}
 			gap="16px"
 			width="270px"
-			height="350px"
+			height="400px"
 			display="flex"
 			flexDir="column"
 			overflow="hidden"
@@ -55,6 +63,7 @@ const ProductCard = ({
 			padding={padding}
 		>
 			<Box
+				as="figure"
 				maxW="100%"
 				display="flex"
 				height="152px"
@@ -62,18 +71,19 @@ const ProductCard = ({
 				justifyContent="center"
 				borderColor="transparent"
 				bgColor={useColorModeValue("grey.7", "grey.7")}
+				onClick={() => navigate(`/cars/${id}`)}
 			>
 				<Image maxW="262px" src={imageUrl} alt={imageAlt} />
 			</Box>
-			<Heading size="7" variant="600">
+			<Heading onClick={() => navigate(`/cars/${id}`)} size="7" variant="600" h="20px" textOverflow="ellipsis" overflow="hidden" whiteSpace="nowrap">
 				{carTitle}
 			</Heading>
 
-			<Text size="2" variant="400">
+			<Text size="2" variant="400" h="48px" display="flex" alignItems="center" textOverflow="ellipsis" whiteSpace="nowrap" overflow="hidden">
 				{carDescription}
 			</Text>
 
-			<AvatarTag name="Samuel Leão" />
+			<AvatarTag name={owner.name} id={owner.id}/>
 
 			<Box maxW="100%" display="flex" justifyContent="space-between">
 				<Box display="flex" gap="12px">

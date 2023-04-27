@@ -29,6 +29,7 @@ const MobCarFilter = () => {
 							<Button
 								h="2.5rem"
 								w="15rem"
+								variant="link"
 								color={colorText}
 								borderRadius="none"
 								alignContent="center"

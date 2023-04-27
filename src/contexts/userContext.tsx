@@ -1,9 +1,20 @@
 import api from "../services/api";
 import { createContext, useContext, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { iLoginForm, iUserContextProps } from "../types/contexts.type";
-import { useToastForm } from "./toastContext";
 import { iUser } from "../types/user.type";
+import { useToastForm } from "./toastContext";
+import {
+	iApiError,
+	iLoginForm,
+	iUserContextProps
+} from "../types/contexts.type";
+import {
+	iSendResetPasswordEmail,
+	iSendResetPasswordEmailResponse,
+	iUserResetPassword,
+	iUserResetPasswordResponse
+} from "../types/userForms";
+import { AxiosError } from "axios";
 
 export const UserContext = createContext({} as iUserContextProps);
 

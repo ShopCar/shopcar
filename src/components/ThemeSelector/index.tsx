@@ -9,19 +9,30 @@ import {
 const ThemeSelector = () => {
 	const { colorMode, toggleColorMode } = useColorMode();
 
+	const icHover = {
+		_hover: {
+			bg: "brand.1",
+			color: "grey.10"
+		}
+	};
+	const icColor = useColorModeValue("grey.1", "grey.10");
+
 	return (
 		<Box textAlign="center">
 			<IconButton
 				size="sm"
-				variant="ghost"
+				bg="transparent"
 				aria-label="mode"
 				onClick={toggleColorMode}
 				transition="all 0.5s ease-out"
-				_hover={{
-					bg: "brand.1",
-					color: "grey.10"
-				}}
-				icon={colorMode === "light" ? <MoonIcon /> : <SunIcon />}
+				{...icHover}
+				icon={
+					colorMode === "light" ? (
+						<MoonIcon color={icColor} />
+					) : (
+						<SunIcon color={icColor} />
+					)
+				}
 			/>
 		</Box>
 	);

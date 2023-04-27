@@ -30,7 +30,7 @@ const Profile = () => {
 			}})
 			setUser(data)
 			
-			const carResponse = await api(`/cars?id=${uuid}`)
+			const carResponse = await api(`/cars?id=${id}`)
 			setUserCars(carResponse.data)
 
 			id === uuid? setIsOwner(true) : setIsOwner(false)
@@ -55,6 +55,7 @@ const Profile = () => {
 				<AvatarInitials
 					name={user? user.name : ""}
 					color={"green"}
+					id={id!}
 				/>
 				<Heading size={"6"}>{user && user.name}</Heading>
 				<Text textAlign={"justify"}>{user && user.description? user.description : "Anunciante sem descrição"}</Text>
@@ -69,7 +70,7 @@ const Profile = () => {
 			>
 			{
 				userCars && userCars.map((item) => (
-					<ProductCard padding="3rem 0 0 0" id={item.id} km={item.km} year={item.year} imageUrl={item.images.cover} imageAlt={item.model} carTitle={item.model} carDescription={item.description? item.description : "Anúncio sem descrição"} formattedPrice={Number(item.price).toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })} key={item.id} />
+					<ProductCard owner={{name: item.user.name, id: item.user.id}} padding="3rem 0 0 0" id={item.id} km={item.km} year={item.year} imageUrl={item.images.cover} imageAlt={item.model} carTitle={item.model} carDescription={item.description? item.description : "Anúncio sem descrição"} formattedPrice={Number(item.price).toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })} key={item.id} />
 				))
 			}
 			</Flex>
