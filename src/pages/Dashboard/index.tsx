@@ -25,12 +25,13 @@ const Dashboard = () => {
 		xl: "60px"
 	};
 
-	const {allCars, setAllCars} = useCarContext()
+	const {allCars, setAllCars, brands, setBrands, getCarsBrands} = useCarContext()
 
 	useEffect(() => {
 		const getInicialData = async () => {
 			const {data} = await api("/cars");
 			setAllCars(data)
+			setBrands(await getCarsBrands());
 			console.log(data)
 		}
 		getInicialData()
