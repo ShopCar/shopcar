@@ -1,8 +1,8 @@
 import {
-  Route,
-  RouterProvider,
-  createBrowserRouter,
-  createRoutesFromElements,
+	Route,
+	RouterProvider,
+	createBrowserRouter,
+	createRoutesFromElements
 } from "react-router-dom";
 
 import { Heading } from "@chakra-ui/react";
@@ -19,6 +19,8 @@ import CarLayout from "../layouts/CarLayout";
 import RootLayout from "../layouts/RootLayout";
 
 import ProtectRoutes from "../components/ProtectRoutes";
+import SendResetPasswordEmail from "../pages/ResetPassword/SendResetPasswordEmail";
+import UserResetPassword from "../pages/ResetPassword/UserResetPassword";
 
 const MainRoutes = () => {
   const router = createBrowserRouter(
@@ -48,6 +50,7 @@ const MainRoutes = () => {
   );
 
   return <RouterProvider router={router} />;
+
 };
 
 export default MainRoutes;

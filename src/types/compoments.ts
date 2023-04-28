@@ -21,8 +21,14 @@ export interface iInputProps {
 }
 
 export interface iAvatarProps {
+<<<<<<< HEAD
   name: string;
   color?: string;
+=======
+	name: string;
+	id: string;
+	color?: string;
+>>>>>>> 088b7c722e84b2c59abda025bf9ca536b66a4954
 }
 
 export interface iRegisterCarModal {
