@@ -5,11 +5,15 @@ import {
   Menu,
   MenuButton,
   MenuItem,
+  MenuItemOption,
   MenuList,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../../../services/api";
+import ModalAddressUpdate from "../../ModalAddressUpdate";
+import ModalAnnouncementUpdate from "../../ModalAnnouncementUpdate";
+import ModalProfileUpdate from "../../ModalProfileUpdate";
 
 const AuthenticatedNav = () => {
   const navigate = useNavigate();
@@ -62,12 +66,12 @@ const AuthenticatedNav = () => {
       >
         {acronym}
       </Flex>
-      <Menu isLazy>
+      <Menu>
         <MenuButton>{user}</MenuButton>
         <MenuList>
-          <MenuItem>Editar Perfil</MenuItem>
-          <MenuItem>Editar Endereço</MenuItem>
-          {!!isSeller ? <MenuItem>Editar Anúncios</MenuItem> : <></>}
+          <ModalProfileUpdate />
+          <ModalAddressUpdate />
+          {!!isSeller ? <ModalAnnouncementUpdate /> : <></>}
           <MenuItem onClick={logout}>Sair</MenuItem>
         </MenuList>
       </Menu>
