@@ -119,7 +119,6 @@ const outlineBrand1 = (props: StyleFunctionProps) => ({
 });
 
 const link = (props: StyleFunctionProps) => ({
-<<<<<<< HEAD
   variant: "ghost",
   color: "grey.0",
   transition: "all 0.5s ease-out",
@@ -129,17 +128,6 @@ const link = (props: StyleFunctionProps) => ({
   _active: {
     bg: "grey.8",
   },
-=======
-	variant: "ghost",
-	color: "grey.0",
-	transition: "all 0.5s ease-out",
-	// _hover: {
-	// 	bg: "grey.8"
-	// },
-	_active: {
-		bg: "grey.8"
-	}
->>>>>>> 088b7c722e84b2c59abda025bf9ca536b66a4954
 });
 
 const alert = (props: StyleFunctionProps) => ({
@@ -221,17 +209,10 @@ const Button: ComponentStyleConfig = {
     standard,
   },
 
-<<<<<<< HEAD
   defaultProps: {
     size: "big",
     variant: "standard",
   },
-=======
-	defaultProps: {
-		size: "",
-		variant: ""
-	}
->>>>>>> 088b7c722e84b2c59abda025bf9ca536b66a4954
 };
 
 export default Button;
