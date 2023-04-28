@@ -15,13 +15,19 @@ import {
 } from "@chakra-ui/react";
 
 import cars from "../../data/apiCarsData";
+import { useCarContext } from "../../contexts/carContext";
+import { useState } from "react";
+import api from "../../services/api";
 
 const BaseFilter = () => {
-	const years = [...new Set(cars.map(car => car.year))];
-	const brands = [...new Set(cars.map(car => car.brand))];
-	const fuels = [...new Set(cars.map(car => car.fuelType))];
-	const colors = ["Azul", "Branca", "Cinza", "Prata", "Preta", "Verde"];
-	const models = cars.map(car => car.model.split(" ").slice(0, 2).join(" "));
+	const {brands, setAllCars, allCars} = useCarContext()
+	const years = ["2010", "2012", "2013", "2015", "2018", "2021", "2022"];
+	const fuels = ["Flex", "Elétrico", "Híbrido"];
+	const colors = ["Azul", "Branca", "Cinza", "Prata", "Preto", "Verde", "Vermelho", "Laranja", "Amarelo"];
+	const models = [...new Set(allCars?.map(car => car.model.split(" ").slice(0, 2).join(" ")))];
+	const [activeFilter, setActiveFilter] = useState("");
+
+	
 
 	const acItemConfig = { border: "none" };
 	const jSpaceBetween = "space-between";
@@ -61,6 +67,56 @@ const BaseFilter = () => {
 		borderTopColor: "none"
 	};
 
+	const handleBrandFilter = async (name: string) =>{
+		const {data} = await api("/cars");
+		if (activeFilter === name) {
+			setActiveFilter("")
+			setAllCars(data)
+		}
+		else {
+			setActiveFilter(name);
+			setAllCars(data)
+			setAllCars(allCars!.filter(car => car.brand === name));
+		  }
+	}
+
+	const handleColorFilter = async (color: string) =>{
+		if (activeFilter === color) {
+			setActiveFilter("")
+			const {data} = await api("/cars");
+			setAllCars(data)
+		}
+		else {
+			setActiveFilter(color);
+			setAllCars(allCars!.filter(car => car.color === color));
+		  }
+	}
+
+	const handleModelFilter = async (name: string) =>{
+		if (activeFilter === name) {
+			setActiveFilter("")
+			const {data} = await api("/cars");
+			setAllCars(data)
+		}
+		else {
+			setActiveFilter(name);
+			setAllCars(allCars!.filter(car => car.model.toLocaleLowerCase().includes(name.toLocaleLowerCase())));
+		  }
+	}
+
+	const handleYearFilter = async (year: string) =>{
+		if (activeFilter === year) {
+			setActiveFilter("")
+			const {data} = await api("/cars");
+			setAllCars(data)
+		}
+		else {
+			setActiveFilter(year);
+			setAllCars(allCars!.filter(car => car.year === year));
+		  }
+	}
+
+
 	return (
 		<VStack
 			pb="1rem"
@@ -74,23 +130,24 @@ const BaseFilter = () => {
 				align="flex-start"
 				justifyContent={jSpaceBetween}
 			>
-				<Accordion {...accordionConfig}>
+				<Accordion {...accordionConfig}>  {/* BRAND  V*/}
 					<AccordionItem {...acItemConfig}>
 						<AccordionButton {...acButtonConfig}>
 							Marca
 							<AccordionIcon {...acIconConfig} />
 						</AccordionButton>
 						<AccordionPanel>
-							{brands.map(name => (
-								<Text {...acTextConfig} key={name}>
+							{brands && Object.values(brands).map(name => (
+								<Button p="0" height="100%" justifyContent="flex-start" {...acTextConfig} key={name}
+								onClick={(e) => handleBrandFilter(name)}>
 									{name}
-								</Text>
+								</Button>
 							))}
 						</AccordionPanel>
 					</AccordionItem>
 				</Accordion>
 
-				<Accordion {...accordionConfig}>
+				<Accordion {...accordionConfig}>  {/* MODEL  V*/}
 					<AccordionItem {...acItemConfig}>
 						<AccordionButton {...acButtonConfig}>
 							Modelo
@@ -98,15 +155,16 @@ const BaseFilter = () => {
 						</AccordionButton>
 						<AccordionPanel>
 							{models.map(name => (
-								<Text {...acTextConfig} key={name}>
+								<Button p="0" height="100%" justifyContent="flex-start" {...acTextConfig} key={name}
+								onClick={(e) => handleModelFilter(name)}>
 									{name}
-								</Text>
+								</Button>
 							))}
 						</AccordionPanel>
 					</AccordionItem>
 				</Accordion>
 
-				<Accordion {...accordionConfig}>
+				<Accordion {...accordionConfig}>  {/* COLOR  V*/}
 					<AccordionItem {...acItemConfig}>
 						<AccordionButton {...acButtonConfig}>
 							Cor
@@ -114,15 +172,16 @@ const BaseFilter = () => {
 						</AccordionButton>
 						<AccordionPanel>
 							{colors.map(color => (
-								<Text {...acTextConfig} key={color}>
+								<Button p="0" height="100%" justifyContent="flex-start" {...acTextConfig} key={color}
+								onClick={(e) => handleColorFilter(color)}>
 									{color}
-								</Text>
+								</Button>
 							))}
 						</AccordionPanel>
 					</AccordionItem>
 				</Accordion>
 
-				<Accordion {...accordionConfig}>
+				<Accordion {...accordionConfig}>  {/* YEAR */}
 					<AccordionItem {...acItemConfig}>
 						<AccordionButton {...acButtonConfig}>
 							Ano
@@ -130,15 +189,16 @@ const BaseFilter = () => {
 						</AccordionButton>
 						<AccordionPanel>
 							{years.map(name => (
-								<Text {...acTextConfig} key={name}>
+								<Button p="0" height="100%" justifyContent="flex-start" {...acTextConfig} key={name}
+								onClick={(e) => handleYearFilter(name)}>
 									{name}
-								</Text>
+								</Button>
 							))}
 						</AccordionPanel>
 					</AccordionItem>
 				</Accordion>
 
-				<Accordion {...accordionConfig}>
+				<Accordion {...accordionConfig}>  {/* FUEL */}
 					<AccordionItem {...acItemConfig}>
 						<AccordionButton {...acButtonConfig}>
 							Combustível
@@ -146,9 +206,9 @@ const BaseFilter = () => {
 						</AccordionButton>
 						<AccordionPanel>
 							{fuels.map(name => (
-								<Text {...acTextConfig} key={name}>
+								<Button p="0" height="100%" justifyContent="flex-start" {...acTextConfig} key={name}>
 									{name}
-								</Text>
+								</Button>
 							))}
 						</AccordionPanel>
 					</AccordionItem>
