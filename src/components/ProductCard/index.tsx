@@ -4,11 +4,16 @@ import {
 	Badge,
 	Image,
 	Heading,
-	useColorModeValue
+	useColorModeValue,
+	Flex,
+	Button
 } from "@chakra-ui/react";
 
 import AvatarTag from "../Avatar/AvatarTag";
 import { Navigate, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { useUserContext } from "../../contexts/userContext";
+import api from "../../services/api";
 
 interface iPropertyProps {
 	id?: string;
@@ -20,6 +25,7 @@ interface iPropertyProps {
 	sellerName?: string;
 	formattedPrice: string;
 	carDescription: string;
+	buttons?: boolean;
 	padding?: string
 	owner: {
 		name: string;
@@ -37,7 +43,8 @@ const ProductCard = ({
 	carTitle,
 	carDescription,
 	formattedPrice,
-	padding
+	padding,
+	buttons
 }: iPropertyProps) => {
 	const navigate = useNavigate()
 	const boxCardConfig = {
@@ -50,12 +57,26 @@ const ProductCard = ({
 		}
 	};
 
+	const {user, setUser} = useUserContext()
+
+	useEffect(() => {
+		const setInitialData = async () => {
+			const uuid = localStorage.getItem("UUID@shopCar");
+			
+			const {data} = await api(`/users/${uuid}`, {headers: {
+				Authorization: `Bearer ${localStorage.getItem("token@shopCar")}`
+			}})
+			setUser(data)
+		}
+		setInitialData()
+
+	},[])
 	return (
 		<Box
 			id={id}
 			gap="16px"
 			width="270px"
-			height="400px"
+			height="420px"
 			display="flex"
 			flexDir="column"
 			overflow="hidden"
@@ -95,6 +116,13 @@ const ProductCard = ({
 					{formattedPrice}
 				</Heading>
 			</Box>
+			{
+				buttons && owner.id === localStorage.getItem("UUID@shopCar") && 
+				<Flex justifyContent="space-between">
+					<Button p="5px" variant="outline1">Editar</Button>
+					<Button p="5px" variant="outline1">Ver detalhes</Button>
+				</Flex>
+			}
 		</Box>
 	);
 };

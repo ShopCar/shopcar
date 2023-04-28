@@ -59,7 +59,7 @@ const Profile = () => {
 				/>
 				<Heading size={"6"}>{user && user.name}</Heading>
 				<Text textAlign={"justify"}>{user && user.description? user.description : "Anunciante sem descrição"}</Text>
-  				<Button display={isSeller && isOwner? "" : "none"} variant={"brand1"} size={"medium"} onClick={() => {setIsOpen(true)}}>Criar anúncio</Button>
+  				<Button display={isSeller && isOwner? "" : "none"} variant={"outlineBrand1"} size={"medium"} onClick={() => {setIsOpen(true)}}>Criar anúncio</Button>
 			</VStack>
 			<RegisterCarModal isOpen={isOpen} setIsOpen={setIsOpen}/>
 			<Flex
@@ -70,7 +70,7 @@ const Profile = () => {
 			>
 			{
 				userCars && userCars.map((item) => (
-					<ProductCard owner={{name: item.user.name, id: item.user.id}} padding="3rem 0 0 0" id={item.id} km={item.km} year={item.year} imageUrl={item.images.cover} imageAlt={item.model} carTitle={item.model} carDescription={item.description? item.description : "Anúncio sem descrição"} formattedPrice={Number(item.price).toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })} key={item.id} />
+					<ProductCard buttons={true} owner={{name: item.user.name, id: item.user.id}} padding="3rem 0 0 0" id={item.id} km={item.km} year={item.year} imageUrl={item.images.cover} imageAlt={item.model} carTitle={item.model} carDescription={item.description? item.description : "Anúncio sem descrição"} formattedPrice={Number(item.price).toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })} key={item.id} />
 				))
 			}
 			</Flex>
