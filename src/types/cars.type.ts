@@ -52,3 +52,23 @@ export interface icarResponse{
 		gallery: string[]
 	}
 }
+
+export interface icurrentCar{
+	id: string
+	brand: string
+	model: string
+	year: string
+	fuel: string
+	km: string
+	color: string
+	description: string | null
+	isPublished: boolean
+	price: string
+	createdAt: string
+	updatedAt: string
+	images: {
+		id: string
+		cover: string
+		gallery: string[]
+	}
+}

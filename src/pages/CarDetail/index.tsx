@@ -1,8 +1,22 @@
 import { Badge, Box, Flex, Heading, Image, Text, VStack, Button, Avatar } from "@chakra-ui/react";
 import CarPhotos from "../../components/CarPhotos";
 import Comment from "../../components/Comment";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { icurrentCar } from "../../types/cars.type";
+import api from "../../services/api";
 
 const CarDetail = () => {
+	const [currentCar, setCurrentCar] = useState<icurrentCar | null>(null)
+
+	const {id} = useParams()
+	useEffect(() => {
+		const getInitialData = async () => {
+			const {data} = await api(`/cars/${id}`);
+			setCurrentCar(data)
+		}
+		getInitialData()
+	},[])
 	return (
 		<VStack
 			h="100%"
@@ -22,14 +36,14 @@ const CarDetail = () => {
 
 				>
 					<Image 
-						src="https://th.bing.com/th/id/R.1d42197b7e9b990920501bce191f88f7?rik=4cKi%2f156T8QNPw&riu=http%3a%2f%2fpluspng.com%2fimg-png%2fcar-png-car-png-file-1766.png&ehk=sx8SFXL7KavUZlPER7RmGVRtgHq4vasX3JEwojUXCgU%3d&risl=&pid=ImgRaw&r=0" 
-						alt="car image"
+						src={currentCar ? currentCar.images.cover : ""}
+						alt={currentCar ? currentCar.model : "Car"}
 						borderRadius="5px"
 						margin="0 auto"
 						maxH="100%"
 					/>
 				</Box>
-				<CarPhotos/>
+				<CarPhotos photos={String(currentCar?.images.gallery).replace(/[}"\{]/g, "").split(",")}/>
 			</Flex>
 			<Flex
 				minH="65vh"
@@ -57,7 +71,7 @@ const CarDetail = () => {
 							w="100%"
 							textAlign="justify"
 						>
-							Mercedes Benz A 200 CGI ADVANCE SEDAN Mercedes Benz
+							{currentCar?.model}
 						</Heading>
 						<Flex
 							h="20%"
@@ -69,21 +83,21 @@ const CarDetail = () => {
 									variant="opacity"
 									p="0 5px"
 								>
-									2001
+									{currentCar?.year}
 								</Badge>
 								<Badge
 									variant="opacity"
 									p="0 5px"
 									ml="10px"
 								>
-									0 KM
+									{`${currentCar?.km} KM`}
 								</Badge>
 							</Flex>
 							<Text
 								color="grey.1"
 								variant="500"
 							>
-								R$ 75.000,00
+								{Number(currentCar?.price).toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}
 							</Text>
 						</Flex>
 						<Button
@@ -114,7 +128,7 @@ const CarDetail = () => {
 							size="7"
 							textAlign="justify"
 						>
-							Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+							{currentCar?.description ? currentCar.description : "Anúncio sem descrição"}
 						</Text>
 					</Flex>
 					<VStack
@@ -177,3 +191,7 @@ const CarDetail = () => {
 };
 
 export default CarDetail;
+function async() {
+	throw new Error("Function not implemented.");
+}
+
