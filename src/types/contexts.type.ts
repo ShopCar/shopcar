@@ -23,6 +23,6 @@ export interface iUserContextProps {
 	userResetPassword: (data: iUserResetPassword) => Promise<string | undefined>;
 }
 
-export interface iApiError {
+export interface iApiMessage {
 	message: string;
 }
