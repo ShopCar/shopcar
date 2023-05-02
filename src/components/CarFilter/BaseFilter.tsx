@@ -28,13 +28,15 @@ const BaseFilter = () => {
 	const {filteredCars, setFilteredCars} = useCarContext()
 
 	const [activeFilter, setActiveFilter] = useState("");
-	const [brandFilter, setBrandFilter] = useState(false);
+	const [statusBrandFilter, setStatusBrandFilter] = useState(false)
+	const [brandFilter, setBrandFilter] = useState<string[]>([]);
+	const [brandName, setBrandName] = useState<string>("");
 	const [colorFilter, setColorFilter] = useState(false);
 	const [modelFilter, setModelFilter] = useState(false);
 	const [yearFilter, setYearFilter] = useState(false);
 	
 	useEffect(() => {
-		if (!brandFilter && !colorFilter && !modelFilter && !yearFilter){
+		if (brandFilter.length === 0 && !colorFilter && !modelFilter && !yearFilter){
 			setFilteredCars(null)
 		}
 	},[brandFilter, colorFilter, modelFilter, yearFilter])
@@ -78,9 +80,26 @@ const BaseFilter = () => {
 	};
 
 	const handleBrandFilter = async (brand: string) =>{
-		const filteredCarsByBrand = allCars?.filter(car => car.brand === brand)
-		setFilteredCars(filteredCarsByBrand? filteredCarsByBrand : [])
+		brandFilter.includes(brand)? true : setBrandFilter((old) => [...old, brand])
+		
+		console.log(brandFilter)
+		
+		const filteredCarsByBrand = allCars?.filter(car => brandFilter.includes(car.brand))
+
+		if(!filteredCars || filteredCars?.length === 0){
+			setFilteredCars(filteredCarsByBrand? filteredCarsByBrand : [])
+
+		}else{
+			setFilteredCars(oldFilter => {
+				const newFilter = oldFilter?.filter(value => filteredCarsByBrand?.includes(value));
+				return newFilter? newFilter : []
+			})
+		}
 	}
+
+	useEffect(() => {
+		handleBrandFilter(brandName)	
+	}, [statusBrandFilter])
 
 	const handleColorFilter = async (color: string) =>{
 		const filteredCarsByColor = allCars?.filter(car => car.color === color)
@@ -93,7 +112,6 @@ const BaseFilter = () => {
 				return newFilter? newFilter : []
 			})
 		}
-		
 	}
 
 	const handleModelFilter = async (name: string) =>{
@@ -143,7 +161,11 @@ const BaseFilter = () => {
 						<AccordionPanel>
 							{brands && Object.values(brands).map(name => (
 								<Button p="0" height="100%" justifyContent="flex-start" {...acTextConfig} key={name}
-								onClick={(e) => handleBrandFilter(name)}>
+								onClick={(e) =>{
+									setBrandName(name);
+									setStatusBrandFilter(!statusBrandFilter);
+									e.currentTarget.style.color = e.currentTarget.style.color? "" : "#4529e6";
+								}}>
 									{name}
 								</Button>
 							))}

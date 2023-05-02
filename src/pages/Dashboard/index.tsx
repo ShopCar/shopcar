@@ -36,8 +36,6 @@ const Dashboard = () => {
 		getInicialData()
 	},[])
 
-	console.log(filteredCars)
-
 	const justifyFlex = { base: "center", sm: "flex-start" };
 
 	return (
