@@ -14,6 +14,8 @@ interface iCarContextProps{
 	getCarsByBrand: (brand: string) => Promise<iCar[]>;
 	allCars: icarResponse[] | null;
 	setAllCars: Dispatch<SetStateAction<icarResponse[] | null>>
+	filteredCars: icarResponse[] | null
+	setFilteredCars: Dispatch<SetStateAction<icarResponse[] | null>>
 }
 export const CarProvider = ({ children }: any) => {
 
@@ -23,6 +25,7 @@ export const CarProvider = ({ children }: any) => {
 	const [cars, setCars] = useState<Array<iCar>|null>(null)
 	const [brands, setBrands] = useState<Array<string>|null>(null)
 	const [allCars, setAllCars] = useState<icarResponse[] | null>(null)
+	const [filteredCars, setFilteredCars] = useState<icarResponse[] | null>(null);
 
 	const getCarsBrands = async () => {
 		const response: AxiosResponse<iCarsBrands> = await carsApi("");
@@ -33,7 +36,7 @@ export const CarProvider = ({ children }: any) => {
 		return response.data
 	}
 
-	return <CarContext.Provider value={{cars, setCars, brands, setBrands, allCars, setAllCars, getCarsBrands, getCarsByBrand}}>{children}</CarContext.Provider>;
+	return <CarContext.Provider value={{cars, setCars, brands, setBrands, allCars, setAllCars, getCarsBrands, getCarsByBrand, filteredCars, setFilteredCars}}>{children}</CarContext.Provider>;
 };
 
 export const useCarContext = () => useContext(CarContext);

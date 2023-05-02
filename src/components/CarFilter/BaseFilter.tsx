@@ -14,9 +14,8 @@ import {
 	useColorModeValue
 } from "@chakra-ui/react";
 
-import cars from "../../data/apiCarsData";
 import { useCarContext } from "../../contexts/carContext";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import api from "../../services/api";
 
 const BaseFilter = () => {
@@ -25,9 +24,20 @@ const BaseFilter = () => {
 	const fuels = ["Flex", "Elétrico", "Híbrido"];
 	const colors = ["Azul", "Branca", "Cinza", "Prata", "Preto", "Verde", "Vermelho", "Laranja", "Amarelo"];
 	const models = [...new Set(allCars?.map(car => car.model.split(" ").slice(0, 2).join(" ")))];
-	const [activeFilter, setActiveFilter] = useState("");
-
 	
+	const {filteredCars, setFilteredCars} = useCarContext()
+
+	const [activeFilter, setActiveFilter] = useState("");
+	const [brandFilter, setBrandFilter] = useState(false);
+	const [colorFilter, setColorFilter] = useState(false);
+	const [modelFilter, setModelFilter] = useState(false);
+	const [yearFilter, setYearFilter] = useState(false);
+	
+	useEffect(() => {
+		if (!brandFilter && !colorFilter && !modelFilter && !yearFilter){
+			setFilteredCars(null)
+		}
+	},[brandFilter, colorFilter, modelFilter, yearFilter])
 
 	const acItemConfig = { border: "none" };
 	const jSpaceBetween = "space-between";
@@ -67,29 +77,23 @@ const BaseFilter = () => {
 		borderTopColor: "none"
 	};
 
-	const handleBrandFilter = async (name: string) =>{
-		const {data} = await api("/cars");
-		if (activeFilter === name) {
-			setActiveFilter("")
-			setAllCars(data)
-		}
-		else {
-			setActiveFilter(name);
-			setAllCars(data)
-			setAllCars(allCars!.filter(car => car.brand === name));
-		  }
+	const handleBrandFilter = async (brand: string) =>{
+		const filteredCarsByBrand = allCars?.filter(car => car.brand === brand)
+		setFilteredCars(filteredCarsByBrand? filteredCarsByBrand : [])
 	}
 
 	const handleColorFilter = async (color: string) =>{
-		if (activeFilter === color) {
-			setActiveFilter("")
-			const {data} = await api("/cars");
-			setAllCars(data)
+		const filteredCarsByColor = allCars?.filter(car => car.color === color)
+
+		if(!filteredCars || filteredCars?.length === 0){
+			setFilteredCars(filteredCarsByColor? filteredCarsByColor : [])
+		}else{
+			setFilteredCars(oldFilter => {
+				const newFilter = oldFilter?.filter(value => filteredCarsByColor?.includes(value));
+				return newFilter? newFilter : []
+			})
 		}
-		else {
-			setActiveFilter(color);
-			setAllCars(allCars!.filter(car => car.color === color));
-		  }
+		
 	}
 
 	const handleModelFilter = async (name: string) =>{
