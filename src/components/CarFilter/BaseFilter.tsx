@@ -1,7 +1,6 @@
 import {
 	Box,
 	Flex,
-	Text,
 	Input,
 	Button,
 	VStack,
@@ -16,7 +15,16 @@ import {
 
 import { useCarContext } from "../../contexts/carContext";
 import { useEffect, useState } from "react";
-import api from "../../services/api";
+import { icarResponse } from "../../types/cars.type";
+
+
+interface ifilters {
+	brand: string[];
+	color: string[];
+	model: string[];
+	year: string[];
+	fuel: string[];
+}
 
 const BaseFilter = () => {
 	const {brands, setAllCars, allCars} = useCarContext()
@@ -27,19 +35,49 @@ const BaseFilter = () => {
 	
 	const {filteredCars, setFilteredCars} = useCarContext()
 
-	const [activeFilter, setActiveFilter] = useState("");
-	const [statusBrandFilter, setStatusBrandFilter] = useState(false)
-	const [brandFilter, setBrandFilter] = useState<string[]>([]);
-	const [brandName, setBrandName] = useState<string>("");
-	const [colorFilter, setColorFilter] = useState(false);
-	const [modelFilter, setModelFilter] = useState(false);
-	const [yearFilter, setYearFilter] = useState(false);
+	const [filters, setFilters] = useState<ifilters>({
+		brand: [], color: [], model: [], year: [], fuel: []
+	})
+	
 	
 	useEffect(() => {
-		if (brandFilter.length === 0 && !colorFilter && !modelFilter && !yearFilter){
+		const handleBrandFilter = () => {
+			const filtersNames = Object.keys(filters);
+
+			let allFilteredCars: icarResponse[] | string[] = [""]
+			
+			filtersNames.forEach( filter => {	
+				let filtering = []
+				for(let i = 0; i < filters[filter].length; i++){					
+					allCars?.forEach( car => {
+						if(filter === "model" && car[filter].includes(filters[filter][i])){
+							filtering.push(car)
+						}
+						else if(filters[filter][i] === car[filter]){
+							filtering.push(car)
+						}
+					})
+				}
+				if(allFilteredCars[0] === "" && filters[filter].length > 0){
+					console.log(filtering)
+					allFilteredCars = [...filtering]
+				}
+				else if(filters[filter].length > 0){
+					console.log(filtering)
+					allFilteredCars = filtering.filter((elem) => allFilteredCars.includes(elem))
+				}
+				console.log(allFilteredCars);
+			})
+			console.log(allFilteredCars);
+
+			setFilteredCars(allFilteredCars)
+		}
+		handleBrandFilter()
+		console.log(filters);
+		if (filters.brand.length === 0 && filters.model.length === 0 && filters.color.length === 0 &&filters.year.length === 0){
 			setFilteredCars(null)
 		}
-	},[brandFilter, colorFilter, modelFilter, yearFilter])
+	},[filters])
 
 	const acItemConfig = { border: "none" };
 	const jSpaceBetween = "space-between";
@@ -79,66 +117,6 @@ const BaseFilter = () => {
 		borderTopColor: "none"
 	};
 
-	const handleBrandFilter = async (brand: string) =>{
-		brandFilter.includes(brand)? true : setBrandFilter((old) => [...old, brand])
-		
-		console.log(brandFilter)
-		
-		const filteredCarsByBrand = allCars?.filter(car => brandFilter.includes(car.brand))
-
-		if(!filteredCars || filteredCars?.length === 0){
-			setFilteredCars(filteredCarsByBrand? filteredCarsByBrand : [])
-
-		}else{
-			setFilteredCars(oldFilter => {
-				const newFilter = oldFilter?.filter(value => filteredCarsByBrand?.includes(value));
-				return newFilter? newFilter : []
-			})
-		}
-	}
-
-	useEffect(() => {
-		handleBrandFilter(brandName)	
-	}, [statusBrandFilter])
-
-	const handleColorFilter = async (color: string) =>{
-		const filteredCarsByColor = allCars?.filter(car => car.color === color)
-
-		if(!filteredCars || filteredCars?.length === 0){
-			setFilteredCars(filteredCarsByColor? filteredCarsByColor : [])
-		}else{
-			setFilteredCars(oldFilter => {
-				const newFilter = oldFilter?.filter(value => filteredCarsByColor?.includes(value));
-				return newFilter? newFilter : []
-			})
-		}
-	}
-
-	const handleModelFilter = async (name: string) =>{
-		if (activeFilter === name) {
-			setActiveFilter("")
-			const {data} = await api("/cars");
-			setAllCars(data)
-		}
-		else {
-			setActiveFilter(name);
-			setAllCars(allCars!.filter(car => car.model.toLocaleLowerCase().includes(name.toLocaleLowerCase())));
-		  }
-	}
-
-	const handleYearFilter = async (year: string) =>{
-		if (activeFilter === year) {
-			setActiveFilter("")
-			const {data} = await api("/cars");
-			setAllCars(data)
-		}
-		else {
-			setActiveFilter(year);
-			setAllCars(allCars!.filter(car => car.year === year));
-		  }
-	}
-
-
 	return (
 		<VStack
 			pb="1rem"
@@ -162,8 +140,10 @@ const BaseFilter = () => {
 							{brands && Object.values(brands).map(name => (
 								<Button p="0" height="100%" justifyContent="flex-start" {...acTextConfig} key={name}
 								onClick={(e) =>{
-									setBrandName(name);
-									setStatusBrandFilter(!statusBrandFilter);
+									setFilters((old: ifilters) => {
+										const newBrand = old.brand.includes(name)? old.brand.filter(elem => elem !== name) : [...old.brand, name]
+										return {...old, brand: newBrand}
+									});
 									e.currentTarget.style.color = e.currentTarget.style.color? "" : "#4529e6";
 								}}>
 									{name}
@@ -182,7 +162,13 @@ const BaseFilter = () => {
 						<AccordionPanel>
 							{models.map(name => (
 								<Button p="0" height="100%" justifyContent="flex-start" {...acTextConfig} key={name}
-								onClick={(e) => handleModelFilter(name)}>
+								onClick={(e) =>{
+									setFilters((old: ifilters) => {
+										const newModel = old.model.includes(name)? old.model.filter(elem => elem !== name) : [...old.model, name]
+										return {...old, model: newModel}
+									});
+									e.currentTarget.style.color = e.currentTarget.style.color? "" : "#4529e6";
+								}}>
 									{name}
 								</Button>
 							))}
@@ -199,7 +185,13 @@ const BaseFilter = () => {
 						<AccordionPanel>
 							{colors.map(color => (
 								<Button p="0" height="100%" justifyContent="flex-start" {...acTextConfig} key={color}
-								onClick={(e) => handleColorFilter(color)}>
+								onClick={(e) => {
+									setFilters((old: ifilters) => {
+										const newColor = old.color.includes(color)? old.color.filter(elem => elem !== color) : [...old.color, color]
+										return {...old, color: newColor}
+									});
+									e.currentTarget.style.color = e.currentTarget.style.color? "" : "#4529e6";
+								}}>
 									{color}
 								</Button>
 							))}
@@ -216,7 +208,13 @@ const BaseFilter = () => {
 						<AccordionPanel>
 							{years.map(name => (
 								<Button p="0" height="100%" justifyContent="flex-start" {...acTextConfig} key={name}
-								onClick={(e) => handleYearFilter(name)}>
+								onClick={(e) => {
+									setFilters((old: ifilters) => {
+										const newyear = old.year.includes(name)? old.year.filter(elem => elem !== name) : [...old.year, name]
+										return {...old, year: newyear}
+									});
+									e.currentTarget.style.color = e.currentTarget.style.color? "" : "#4529e6";
+								}}>
 									{name}
 								</Button>
 							))}
@@ -232,7 +230,15 @@ const BaseFilter = () => {
 						</AccordionButton>
 						<AccordionPanel>
 							{fuels.map(name => (
-								<Button p="0" height="100%" justifyContent="flex-start" {...acTextConfig} key={name}>
+								<Button p="0" height="100%" justifyContent="flex-start" {...acTextConfig} key={name}
+									onClick={(e) => {
+										setFilters((old: ifilters) => {
+											const newFuel = old.fuel.includes(name)? old.fuel.filter(elem => elem !== name) : [...old.fuel, name]
+											return {...old, fuel: newFuel}
+										});
+										e.currentTarget.style.color = e.currentTarget.style.color? "" : "#4529e6";
+									}}
+								>
 									{name}
 								</Button>
 							))}
