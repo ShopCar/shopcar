@@ -27,13 +27,13 @@ interface ifilters {
 }
 
 const BaseFilter = () => {
-	const {brands, setAllCars, allCars} = useCarContext()
+	const {brands, allCars} = useCarContext()
 	const years = ["2010", "2012", "2013", "2015", "2018", "2021", "2022"];
 	const fuels = ["Flex", "Elétrico", "Híbrido"];
 	const colors = ["Azul", "Branca", "Cinza", "Prata", "Preto", "Verde", "Vermelho", "Laranja", "Amarelo"];
 	const models = [...new Set(allCars?.map(car => car.model.split(" ").slice(0, 2).join(" ")))];
 	
-	const {filteredCars, setFilteredCars} = useCarContext()
+	const {setFilteredCars} = useCarContext()
 
 	const [filters, setFilters] = useState<ifilters>({
 		brand: [], color: [], model: [], year: [], fuel: []
@@ -59,16 +59,12 @@ const BaseFilter = () => {
 					})
 				}
 				if(allFilteredCars[0] === "" && filters[filter].length > 0){
-					console.log(filtering)
 					allFilteredCars = [...filtering]
 				}
 				else if(filters[filter].length > 0){
-					console.log(filtering)
 					allFilteredCars = filtering.filter((elem) => allFilteredCars.includes(elem))
 				}
-				console.log(allFilteredCars);
 			})
-			console.log(allFilteredCars);
 
 			setFilteredCars(allFilteredCars)
 		}
