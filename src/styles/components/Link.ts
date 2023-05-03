@@ -10,10 +10,16 @@ const standard = defineStyle({
 	},
 	_hover: {
 		color: "brand.1!important",
-		textDecoration: "none"
+		textDecoration: "none",
+		_dark: {
+			color: "brand.3!important"
+		}
 	},
 	_activeLink: {
-		color: "brand.1!important"
+		color: "brand.1!important",
+		_dark: {
+			color: "brand.3!important"
+		}
 	}
 });
 

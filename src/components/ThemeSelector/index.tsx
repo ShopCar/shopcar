@@ -11,7 +11,7 @@ const ThemeSelector = () => {
 
 	const icHover = {
 		_hover: {
-			bg: "brand.1",
+			bg: useColorModeValue("grey.6", "brand.1"),
 			color: "grey.10"
 		}
 	};
