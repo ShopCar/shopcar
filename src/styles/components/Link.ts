@@ -4,27 +4,38 @@ const standard = defineStyle({
 	color: "grey.2",
 	fontSize: "16px",
 	fontWeight: "semibold",
+	transition: "all 0.5s ease-out",
 	_dark: {
 		color: "grey.10"
 	},
 	_hover: {
 		color: "brand.1!important",
-		textDecoration: "none"
+		textDecoration: "none",
+		_dark: {
+			color: "brand.3!important"
+		}
 	},
-	transition: "all 0.2 easy-in-out"
+	_activeLink: {
+		color: "brand.1!important",
+		_dark: {
+			color: "brand.3!important"
+		}
+	}
 });
 
 const outline = defineStyle({
-	w: "133px",
-	h: "48px",
-	py: "10px",
+	h: "42px",
+	py: "8px",
+	maxW: "100%",
+	minW: "115px",
 	color: "grey.0",
 	fontSize: "16px",
 	textAlign: "center",
-	fontWeight: "semibold",
+	borderRadius: "4px",
 	border: "1.5px solid",
 	borderColor: "grey.4",
-	borderRadius: "4px",
+	fontWeight: "semibold",
+	transition: "all 0.5s ease-out",
 	_hover: {
 		bg: "grey.1",
 		color: "grey.10!important",
@@ -36,17 +47,26 @@ const outline = defineStyle({
 	},
 	_dark: {
 		color: "grey.10"
+	},
+	_activeLink: {
+		bg: "grey.1",
+		color: "grey.10!important",
+		textDecoration: "none",
+		_dark: {
+			bg: "grey.0",
+			borderColor: "grey.0"
+		}
 	}
 });
 
 const Link: ComponentStyleConfig = {
 	baseStyle: {},
 	variants: {
-		default: { ...standard },
+		standard,
 		outline
 	},
 	defaultProps: {
-		variant: "default"
+		variant: "standard"
 	}
 };
 

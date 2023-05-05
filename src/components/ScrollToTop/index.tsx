@@ -1,24 +1,10 @@
-import { useEffect, useState } from "react";
-
 import { ChevronUpIcon } from "@chakra-ui/icons";
 import { IconButton, useColorModeValue } from "@chakra-ui/react";
 
-export default function ScrollToTop() {
-	const [isVisible, setIsVisible] = useState(false);
+import { useGlobalContext } from "../../contexts/globalContext";
 
-	useEffect(() => {
-		const toggleVisibility = () => {
-			if (window.pageYOffset > 100) {
-				setIsVisible(true);
-			} else {
-				setIsVisible(false);
-			}
-		};
-
-		window.addEventListener("scroll", toggleVisibility);
-
-		return () => window.removeEventListener("scroll", toggleVisibility);
-	}, []);
+const ScrollToTop = () => {
+	const { isVisible } = useGlobalContext();
 
 	const scrollToTop = () => {
 		window.scrollTo({
@@ -27,25 +13,40 @@ export default function ScrollToTop() {
 		});
 	};
 
+	const bottom = {
+		base: "90px",
+		ss: "80px",
+		md: "33px"
+	};
+	const right = {
+		base: "16px",
+		md: "30px",
+		xl: "60px"
+	};
+	const bgColor = useColorModeValue("grey.1", "grey.2");
+
 	return (
 		<>
 			{isVisible && (
 				<IconButton
-					aria-label="scroll to top"
-					icon={<ChevronUpIcon />}
 					size="sm"
+					bg={bgColor}
+					right={right}
 					fontSize="xl"
 					color="white"
-					bg={useColorModeValue("grey.1", "grey.2")}
-					_hover={{ bg: "brand.1" }}
+					bottom={bottom}
 					variant="solid"
-					onClick={scrollToTop}
 					position="fixed"
-					bottom="25px"
-					right={["16px", "60px"]}
-					zIndex="3"
+					zIndex="tooltip"
+					onClick={scrollToTop}
+					icon={<ChevronUpIcon />}
+					aria-label="scroll to top"
+					_hover={{ bg: "brand.1" }}
+					transition="all 0.5s ease-out"
 				/>
 			)}
 		</>
 	);
-}
+};
+
+export default ScrollToTop;

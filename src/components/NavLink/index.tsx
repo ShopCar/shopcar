@@ -1,8 +1,7 @@
-import { Link as ReactRouterLink } from "react-router-dom";
-
 import { Link } from "@chakra-ui/react";
+import { NavLink as ReactRouterLink } from "react-router-dom";
 
-import { iLinkProps } from "../../types/navigation.types";
+import { iLinkProps } from "../../types/compoments";
 
 const NavLink = ({ children, variant, type, path }: iLinkProps) => {
 	return (
@@ -20,7 +19,7 @@ const NavLink = ({ children, variant, type, path }: iLinkProps) => {
 			)}
 
 			{type == "external" && (
-				<Link href={path} variant={variant}>
+				<Link href={`http://${path}`} variant={variant} isExternal>
 					{children}
 				</Link>
 			)}

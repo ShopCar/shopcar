@@ -6,6 +6,9 @@ const standard = (props: StyleFunctionProps) => ({
 	color: mode("white", "grey.0")(props),
 	_hover: {
 		bg: mode("grey.1", "grey.5")(props)
+	},
+	_active: {
+		bg: mode("grey.1", "grey.5")(props)
 	}
 });
 
@@ -13,6 +16,9 @@ const negative = (props: StyleFunctionProps) => ({
 	bg: mode("grey.6", "grey.8")(props),
 	color: mode("grey.2", "grey.0")(props),
 	_hover: {
+		bg: "grey.5"
+	},
+	_active: {
 		bg: "grey.5"
 	}
 });
@@ -28,6 +34,9 @@ const brand1 = (props: StyleFunctionProps) => ({
 	color: "white",
 	_hover: {
 		bg: "brand.2"
+	},
+	_active: {
+		bg: "brand.2"
 	}
 });
 
@@ -37,6 +46,10 @@ const brandOpacity = (props: StyleFunctionProps) => ({
 	_hover: {
 		bg: "grey.10",
 		color: "grey.1"
+	},
+	_active: {
+		color: "grey.1",
+		bg: "grey.10"
 	}
 });
 
@@ -45,6 +58,10 @@ const outlineLight = (props: StyleFunctionProps) => ({
 	color: "grey.10",
 	_hover: {
 		color: "grey.1"
+	},
+	_active: {
+		color: "grey.1",
+		bg: "grey.10"
 	}
 });
 
@@ -54,6 +71,14 @@ const outline1 = (props: StyleFunctionProps) => ({
 	borderColor: "grey.0",
 	color: "grey.0",
 	_hover: {
+		bg: "grey.1",
+		color: "grey.10"
+	},
+	_dark: {
+		borderColor: "grey.10",
+		color: "grey.10"
+	},
+	_active: {
 		bg: "grey.1",
 		color: "grey.10"
 	}
@@ -67,6 +92,10 @@ const outline2 = (props: StyleFunctionProps) => ({
 	_hover: {
 		bg: "grey.1",
 		color: "grey.10"
+	},
+	_active: {
+		bg: "grey.1",
+		color: "grey.10"
 	}
 });
 
@@ -78,13 +107,17 @@ const outlineBrand1 = (props: StyleFunctionProps) => ({
 	_hover: {
 		bg: "brand.4",
 		color: "brand.1"
+	},
+	_active: {
+		bg: "brand.4",
+		color: "brand.1"
 	}
 });
 
 const link = (props: StyleFunctionProps) => ({
 	variant: "ghost",
 	color: "grey.0",
-	_hover: {
+	_active: {
 		bg: "grey.8"
 	}
 });
@@ -94,6 +127,9 @@ const alert = (props: StyleFunctionProps) => ({
 	color: "feedback.alert1",
 	_hover: {
 		bg: "feedback.alert2"
+	},
+	_active: {
+		bg: "feedback.alert2"
 	}
 });
 
@@ -101,6 +137,9 @@ const sucess = (props: StyleFunctionProps) => ({
 	bg: "feedback.sucess3",
 	color: "feedback.sucess1",
 	_hover: {
+		bg: "feedback.sucess2"
+	},
+	_active: {
 		bg: "feedback.sucess2"
 	}
 });
@@ -114,7 +153,8 @@ const brandDisable = (props: StyleFunctionProps) => ({
 const Button: ComponentStyleConfig = {
 	baseStyle: {
 		borderRadius: "4px",
-		fontWeight: "semibold"
+		fontWeight: "semibold",
+		transition: "all 0.5s ease-out"
 	},
 
 	sizes: {
@@ -125,6 +165,11 @@ const Button: ComponentStyleConfig = {
 		2: {
 			h: "48px",
 			w: "146px",
+			fontSize: "16px"
+		},
+		3: {
+			h: "48px",
+			w: "150px",
 			fontSize: "16px"
 		},
 		medium: {
@@ -152,12 +197,12 @@ const Button: ComponentStyleConfig = {
 		outlineLight,
 		outlineBrand1,
 		brandDisable,
-		default: { ...standard }
+		standard
 	},
 
 	defaultProps: {
-		size: "big",
-		variant: "default"
+		size: "",
+		variant: ""
 	}
 };
 

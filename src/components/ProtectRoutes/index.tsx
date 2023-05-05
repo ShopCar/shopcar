@@ -1,9 +1,20 @@
+import { Navigate, Outlet } from "react-router-dom";
+import { useUserContext } from "../../contexts/userContext";
+
 const ProtectRoutes = () => {
-	return <></>;
+
+	// const { user } = useUserContext();
+	const token = localStorage.getItem("token@shopCar")
+	return (
+		<>
+			{token ? <Outlet /> : <Navigate to="/dashboard" replace />}
+		</>
+	)
+	
 };
 
 export default ProtectRoutes;
-/*
-const { user } = useUserContext();
-{user ? <Outlet /> : <Navigate to="/" replace />}
-*/
+
+
+
+

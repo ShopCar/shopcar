@@ -1,37 +1,26 @@
-import {
-	Stack,
-	Flex,
-	Button,
-	Text,
-	VStack,
-	useBreakpointValue,
-	Heading
-} from "@chakra-ui/react";
-// ./src/assets/banner.png
+import { Stack, Flex, Text, VStack, Heading } from "@chakra-ui/react";
+
 const Banner = () => {
+	const imgUrl =
+		"url(https://images.unsplash.com/photo-1595391937914-c84f16f2b129?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80)";
+
 	return (
 		<Flex
-			w={"full"}
-			h="60%"
-			backgroundImage={
-				"url(https://images.unsplash.com/photo-1485291571150-772bcfc10da5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=928&q=80)"
-			}
+			w="full"
+			h="70vh"
 			backgroundSize="cover"
-			backgroundPosition={"center center"}
+			backgroundImage={imgUrl}
+			backgroundPosition="center"
 		>
-			<VStack
-				w={"full"}
-				justify={"center"}
-				px={useBreakpointValue({ base: 4, md: 8 })}
-				bgGradient={"linear(to-r, blackAlpha.600, transparent)"}
-			>
-				<Stack maxW={"2xl"} align={"center"} spacing={6}>
+			<VStack w="full" justify="center" px={{ base: 4, md: 8 }}>
+				<Stack maxW="2xl" align="center" spacing={6}>
 					<Heading color="white"> ShopCar</Heading>
 					<Text
-						color={"white"}
+						color="white"
+						textAlign="center"
 						fontWeight={700}
 						lineHeight={1.2}
-						fontSize={useBreakpointValue({ base: "3xl", md: "4xl" })}
+						fontSize={{ base: "2xl", sm: "3xl", lg: "4xl" }}
 					>
 						A melhor plataforma de anúncios de carros do país
 					</Text>

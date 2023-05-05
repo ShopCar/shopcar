@@ -19,6 +19,8 @@ import CarLayout from "../layouts/CarLayout";
 import RootLayout from "../layouts/RootLayout";
 
 import ProtectRoutes from "../components/ProtectRoutes";
+import SendResetPasswordEmail from "../pages/ResetPassword/SendResetPasswordEmail";
+import UserResetPassword from "../pages/ResetPassword/UserResetPassword";
 
 const MainRoutes = () => {
 	const router = createBrowserRouter(
@@ -32,13 +34,19 @@ const MainRoutes = () => {
 				<Route path="login" element={<Login />} />
 				<Route path="register" element={<Register />} />
 
+				<Route path="">
+					<Route path="reset_password/" element={<SendResetPasswordEmail />} />
+					<Route path="reset_password/:token" element={<UserResetPassword />} />
+				</Route>
+
 				<Route path="cars" element={<CarLayout />}>
 					<Route path=":id" element={<CarDetail />}></Route>
 				</Route>
 
+				<Route path="profile/:id" element={<Profile />} />
+
 				<Route element={<ProtectRoutes />}>
 					<Route path="dashboard" element={<Dashboard />} />
-					<Route path="profile" element={<Profile />} />
 				</Route>
 
 				<Route path="*" element={<NotFound />} />
