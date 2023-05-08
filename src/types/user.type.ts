@@ -10,3 +10,7 @@ export interface iUser {
 	createdAt: string;
 	updatedAt: string;
 }
+
+export interface iUserComments extends iUser{
+	resetToken: null | string;
+}
