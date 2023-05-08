@@ -10,14 +10,15 @@ import {
 	Heading
 } from "@chakra-ui/react";
 
-
 import Banner from "../../components/Banner";
 import CarFilter from "../../components/CarFilter";
 import ProductCard from "../../components/ProductCard";
 import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
 import { useCarContext } from "../../contexts/carContext";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import api from "../../services/api";
+import Pagination from "../../components/Pagination";
+import { useGlobalContext } from "../../contexts/globalContext";
 
 const Home = () => {
 	const pxFlex = {
@@ -25,20 +26,38 @@ const Home = () => {
 		md: "30px",
 		xl: "60px"
 	};
-
-	const {allCars, setAllCars, setBrands, getCarsBrands, filteredCars} = useCarContext()
+	const { windowSize } = useGlobalContext();
+	const { allCars, setAllCars, setBrands, getCarsBrands, filteredCars } =
+		useCarContext();
 
 	useEffect(() => {
 		const getInicialData = async () => {
-			const {data} = await api("/cars");
-			setAllCars(data)
+			const { data } = await api("/cars");
+			setAllCars(data);
 			setBrands(await getCarsBrands());
-			console.log(data)
-		}
-		getInicialData()
-	},[])
+			console.log(data);
+		};
+		getInicialData();
+	}, []);
 
 	const justifyFlex = { base: "center", sm: "flex-start" };
+
+	const itemsPerPage =
+		windowSize.innerWidth > 425 ? 8 : windowSize.innerWidth > 911 ? 12 : 4;
+	const [currentPage, setCurrentPage] = useState(1);
+	const endIndex = currentPage * itemsPerPage;
+	const startIndex = endIndex - itemsPerPage;
+	const items = filteredCars?.length
+		? filteredCars.slice(startIndex, endIndex)
+		: allCars?.slice(startIndex, endIndex);
+	const totalList = filteredCars?.length
+		? filteredCars.length == 0
+			? 1
+			: filteredCars.length
+		: allCars?.length == 0
+		? 1
+		: allCars?.length;
+	const totalPage = totalList ? Math.ceil(totalList / itemsPerPage) : 0;
 
 	return (
 		<VStack minH="100vh" pt="60px">
@@ -72,52 +91,32 @@ const Home = () => {
 						justifyContent={justifyFlex}
 						gap={{ base: "1.75rem", lg: "2.25rem" }}
 					>
-						{
-							filteredCars ? ( filteredCars.length > 0? (
-								filteredCars.map((item) => (
-									<ProductCard owner={{name: item.user.name, id: item.user.id}} padding="3rem 0 0 0" id={item.id} km={item.km} year={Number(item.year)} imageUrl={item.images.cover} imageAlt={item.model} carTitle={item.model} carDescription={item.description? item.description : "Anúncio sem descrição"} formattedPrice={Number(item.price).toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })} key={item.id} />
-								))
-								) : (
-									<Heading>No car was found</Heading>
-								)
-							) : (
-								allCars?.map((item) => (
-									<ProductCard owner={{name: item.user.name, id: item.user.id}} padding="3rem 0 0 0" id={item.id} km={item.km} year={Number(item.year)} imageUrl={item.images.cover} imageAlt={item.model} carTitle={item.model} carDescription={item.description? item.description : "Anúncio sem descrição"} formattedPrice={Number(item.price).toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })} key={item.id} />
-								))
-							)
-						}
+						{items?.map(item => (
+							<ProductCard
+								owner={{ name: item.user.name, id: item.user.id }}
+								padding="3rem 0 0 0"
+								id={item.id}
+								km={item.km}
+								year={Number(item.year)}
+								imageUrl={item.images.cover}
+								imageAlt={item.model}
+								carTitle={item.model}
+								carDescription={
+									item.description ? item.description : "Anúncio sem descrição"
+								}
+								formattedPrice={Number(item.price).toLocaleString("pt-br", {
+									style: "currency",
+									currency: "BRL"
+								})}
+								key={item.id}
+							/>
+						))}
 					</Flex>
-
-					<Box
-						display="flex"
-						justifyContent="center"
-						h="3rem"
-						gap="0.5rem"
-						pb="4rem"
-					>
-						<Button
-							color={useColorModeValue("brand.2", "grey.10")}
-							textDecoration="none!important"
-							_hover={{ color: "brand.1" }}
-						>
-							<ChevronLeftIcon /> Anterior
-						</Button>
-						<Flex gap="4px" align="center">
-							<Text size="1" variant="600" color="grey.2">
-								1{" "}
-							</Text>
-							<Text size="1" variant="600" color="grey.3">
-								de 2
-							</Text>
-						</Flex>
-						<Button
-							color={useColorModeValue("brand.2", "grey.10")}
-							textDecoration="none!important"
-							_hover={{ color: "brand.1" }}
-						>
-							Seguinte <ChevronRightIcon />
-						</Button>
-					</Box>
+					<Pagination
+						totalPage={totalPage}
+						currentPage={currentPage}
+						setCurrentPage={setCurrentPage}
+					/>
 				</GridItem>
 			</Grid>
 		</VStack>

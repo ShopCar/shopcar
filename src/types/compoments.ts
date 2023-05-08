@@ -1,6 +1,7 @@
 import { FieldError, Merge, UseFormRegisterReturn } from "react-hook-form";
 
 import { mandatoryChildren } from "./childrenProps";
+import { Dispatch, SetStateAction } from "react";
 
 export interface iLinkProps extends mandatoryChildren {
 	path: string;
@@ -30,3 +31,9 @@ export interface iRegisterCarModal {
 	isOpen: boolean;
 	setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
+
+export type iPaginationProps = {
+	totalPage: number;
+	currentPage: number;
+	setCurrentPage: Dispatch<SetStateAction<number>>;
+};
