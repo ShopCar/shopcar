@@ -15,7 +15,7 @@
 ## ✅ Links da aplicação
 
 - URL de local develop: http://127.0.0.1:5173/
-- URL de produção: https://shopcar-api.onrender.com/
+- URL de produção: https://shopcar-project.vercel.app/
 
 <br>
 
@@ -40,19 +40,22 @@ https://github.com/ShopCar/shopcar.git
 yarn install
 ```
 
-Com isso feito, para rodar sua aplicação, basta utilizar o comando
+<br/>
+Com isso feito, para rodar sua aplicação, basta utilizar o comando:
 
 ```
 yarn dev
 ```
 
-Não esqueca de rodar o backend, link do backend:
+<br/>
+Essa aplicação faz parte de um projeto fullstack, o servidor backend está configurado por padrão em produção, caso deseje também usar ele localmente, visite o nosso repositório backend e siga as instruções informadas no README para configura-lo, também é preciso mudar a url da api usada, vá no diretório src/services/api.ts, e insira o endereço local da api configurada no campo de baseURL. Link do backend:
 
 ```
 https://github.com/ShopCar/shopcar-api
 
 ```
 
+<br/>
 <h1 align="">👥 Desenvolvedores responsáveis</h1>
 
 <table align="center">
@@ -62,7 +65,7 @@ https://github.com/ShopCar/shopcar-api
         <sub>
           <b>Frederico Almeida</b>  <br/>
           <b>Dev</b> <br/>
-           <div align="center">
+           <div align="center" style="margin: 6px 0;">
             <a href="https://github.com/almeidafrederico" target="_blank"><img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white" target="_blank"/>
            </div>
             <div align="center">
@@ -75,7 +78,7 @@ https://github.com/ShopCar/shopcar-api
         <sub>
           <b>Filipe de Lucena Paiva</b> <br/>
           <b>Scrum Master</b> <br/>
-          <div align="center">
+          <div align="center" style="margin: 6px 0;">
             <a href="https://github.com/filipelucena1" target="_blank"><img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white" target="_blank"/>
           </div>
            <div align="center">
@@ -88,7 +91,7 @@ https://github.com/ShopCar/shopcar-api
         <sub>
           <b>Viviane Ribeiro</b> <br/>
           <b>Dev</b> <br/>
-           <div align="center">
+           <div align="center" style="margin: 6px 0;">
             <a href="https://github.com/vivyribeiro" target="_blank"><img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white" target="_blank"/>
            </div>
             <div align="center">
@@ -101,7 +104,7 @@ https://github.com/ShopCar/shopcar-api
         <sub>
             <b>Gabriel Carriel</b> <br/>
             <b>Dev</b> <br/>
-             <div align="center">
+             <div align="center" style="margin: 6px 0;">
             <a href="https://github.com/gaacarriel" target="_blank"><img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white" target="_blank"/>
             </div>
             <div align="center">
@@ -114,7 +117,7 @@ https://github.com/ShopCar/shopcar-api
         <sub>
         <b>Eduardo Perondi</b>  <br/>
             <b>Dev</b> <br/>
-            <div align="center">
+            <div align="center" style="margin: 6px 0;">
             <a href="https://github.com/EduardoPerondidev" target="_blank"><img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white" target="_blank"/>
             </div>
             <div align="center">
