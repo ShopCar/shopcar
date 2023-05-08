@@ -1,18 +1,19 @@
-import api from "../services/api";
+import { AxiosError } from "axios";
 import { createContext, useContext, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { iUser } from "../types/user.type";
-import { useToastForm } from "./toastContext";
+
+import api from "../services/api";
 import {
 	iApiMessage,
 	iLoginForm,
 	iUserContextProps
 } from "../types/contexts.type";
+import { iUser } from "../types/user.type";
+import { useToastForm } from "./toastContext";
 import {
 	iUserResetPassword,
 	iSendResetPasswordEmail
 } from "../types/userForms";
-import { AxiosError } from "axios";
 
 export const UserContext = createContext({} as iUserContextProps);
 
@@ -20,7 +21,6 @@ export const UserProvider = ({ children }: any) => {
 	const { toast } = useToastForm();
 
 	const [user, setUser] = useState<null | iUser>(null);
-	const [token, setToken] = useState<string | null>(null);
 
 	const navigate = useNavigate();
 	const location = useLocation();
@@ -32,7 +32,7 @@ export const UserProvider = ({ children }: any) => {
 			const response = await api.post("/login", data);
 
 			setUser(response.data.user);
-			setToken(response.data.token);
+
 			localStorage.setItem("token@shopCar", response.data.token);
 			localStorage.setItem("UUID@shopCar", response.data.user.id);
 			localStorage.setItem("isSeller@shopCar", response.data.user.isSeller);
@@ -42,8 +42,7 @@ export const UserProvider = ({ children }: any) => {
 				position: "top-left",
 				color: "green.500"
 			});
-			navigate("/dashboard");
-			navigate(0);
+			navigate("/");
 		} catch (error: any) {
 			console.log(error);
 			toast({

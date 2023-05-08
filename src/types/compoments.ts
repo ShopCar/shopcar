@@ -23,7 +23,7 @@ export interface iInputProps {
 
 export interface iAvatarProps {
 	name: string;
-	id: string;
+	id?: string;
 	color?: string;
 }
 

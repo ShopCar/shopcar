@@ -1,24 +1,14 @@
-import {
-	Flex,
-	VStack,
-	Button,
-	useColorModeValue,
-	Grid,
-	GridItem,
-	Text,
-	Box,
-	Heading
-} from "@chakra-ui/react";
+import { useEffect, useState } from "react";
+import { Flex, Grid, VStack, GridItem } from "@chakra-ui/react";
+
+import api from "../../services/api";
+import { useCarContext } from "../../contexts/carContext";
+import { useGlobalContext } from "../../contexts/globalContext";
 
 import Banner from "../../components/Banner";
 import CarFilter from "../../components/CarFilter";
-import ProductCard from "../../components/ProductCard";
-import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
-import { useCarContext } from "../../contexts/carContext";
-import { useEffect, useState } from "react";
-import api from "../../services/api";
 import Pagination from "../../components/Pagination";
-import { useGlobalContext } from "../../contexts/globalContext";
+import ProductCard from "../../components/ProductCard";
 
 const Home = () => {
 	const pxFlex = {
