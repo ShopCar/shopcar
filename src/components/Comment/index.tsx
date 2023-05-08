@@ -17,7 +17,7 @@ const Comment = ({userName, comment, time, color}: {userName: string, comment: s
 						backgroundColor={color}
 					></Avatar>
 					<Heading mr="15px" as="h3" size="7" variant="500">
-						Samuel Leão
+						{userName}
 					</Heading>
 					<Text
 						color="gray.2"
