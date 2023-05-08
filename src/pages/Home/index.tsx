@@ -43,7 +43,7 @@ const Home = () => {
 	const justifyFlex = { base: "center", sm: "flex-start" };
 
 	const itemsPerPage =
-		windowSize.innerWidth > 425 ? 8 : windowSize.innerWidth > 911 ? 12 : 4;
+		windowSize.innerWidth < 539 ? 4 : windowSize.innerWidth > 911 ? 12 : 6;
 	const [currentPage, setCurrentPage] = useState(1);
 	const endIndex = currentPage * itemsPerPage;
 	const startIndex = endIndex - itemsPerPage;
