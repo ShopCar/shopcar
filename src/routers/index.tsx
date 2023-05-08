@@ -13,12 +13,7 @@ import Profile from "../pages/Profile";
 import Register from "../pages/Register";
 import NotFound from "../pages/NotFound";
 import CarDetail from "../pages/CarDetail";
-import Dashboard from "../pages/Dashboard";
-
-import CarLayout from "../layouts/CarLayout";
 import RootLayout from "../layouts/RootLayout";
-
-import ProtectRoutes from "../components/ProtectRoutes";
 import SendResetPasswordEmail from "../pages/ResetPassword/SendResetPasswordEmail";
 import UserResetPassword from "../pages/ResetPassword/UserResetPassword";
 
@@ -39,15 +34,11 @@ const MainRoutes = () => {
 					<Route path="reset_password/:token" element={<UserResetPassword />} />
 				</Route>
 
-				<Route path="cars" element={<CarLayout />}>
-					<Route path=":id" element={<CarDetail />}></Route>
+				<Route path="cars">
+					<Route path=":id" element={<CarDetail />} />
 				</Route>
 
 				<Route path="profile/:id" element={<Profile />} />
-
-				<Route element={<ProtectRoutes />}>
-					<Route path="dashboard" element={<Dashboard />} />
-				</Route>
 
 				<Route path="*" element={<NotFound />} />
 			</Route>

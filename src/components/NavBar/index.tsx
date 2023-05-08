@@ -4,25 +4,25 @@ import DefaultNav from "./DefaultNav";
 import ThemeSelector from "../ThemeSelector";
 
 const NavBar = () => {
-  return (
-    <>
-      <Box w="full">
-        <Flex
-          h="60px"
-          w="full"
-          gap="16px"
-          align="center"
-          justifyContent="flex-end"
-        >
-          <Divider orientation="vertical" />
+	return (
+		<>
+			<Box w="full">
+				<Flex
+					h="60px"
+					w="full"
+					gap="16px"
+					align="center"
+					justifyContent="flex-end"
+				>
+					<Divider orientation="vertical" />
 
-          <DefaultNav />
+					<DefaultNav />
 
-          <ThemeSelector />
-        </Flex>
-      </Box>
-    </>
-  );
+					<ThemeSelector />
+				</Flex>
+			</Box>
+		</>
+	);
 };
 
 export default NavBar;
