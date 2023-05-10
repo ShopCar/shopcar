@@ -4,20 +4,21 @@ import {
 	Badge,
 	Image,
 	Heading,
-	useColorModeValue,
 	Flex,
 	Button
 } from "@chakra-ui/react";
 
 import AvatarTag from "../Avatar/AvatarTag";
 import { Navigate, useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useUserContext } from "../../contexts/userContext";
 import api from "../../services/api";
+import EditCarModal from "../EditCarModal";
 
 interface iPropertyProps {
 	id?: string;
 	km: string;
+	car?: any;
 	year: number;
 	imageUrl: string;
 	imageAlt: string;
@@ -35,6 +36,7 @@ interface iPropertyProps {
 
 const ProductCard = ({
 	id,
+	car,
 	km,
 	owner,
 	year,
@@ -58,6 +60,7 @@ const ProductCard = ({
 	};
 
 	const { user, setUser } = useUserContext();
+	const [editIsOpen, setEditIsOpen] = useState(false)
 
 	useEffect(() => {
 		const setInitialData = async () => {
@@ -98,13 +101,13 @@ const ProductCard = ({
 				<Image maxW="262px" src={imageUrl} alt={imageAlt} />
 			</Box>
 			<Heading
-				onClick={() => navigate(`/cars/${id}`)}
 				size="7"
 				variant="600"
 				h="20px"
 				textOverflow="ellipsis"
 				overflow="hidden"
 				whiteSpace="nowrap"
+				onClick={() => navigate(`/cars/${id}`)}
 			>
 				{carTitle}
 			</Heading>
@@ -140,14 +143,15 @@ const ProductCard = ({
 			</Box>
 			{buttons && owner.id === localStorage.getItem("UUID@shopCar") && (
 				<Flex justifyContent="space-between">
-					<Button p="5px" variant="outline1">
+					<Button p="5px" variant="outline1" onClick={() => setEditIsOpen(true)}>
 						Editar
 					</Button>
-					<Button p="5px" variant="outline1">
+					<Button onClick={() => navigate(`/cars/${id}`)} p="5px" variant="outline1">
 						Ver detalhes
 					</Button>
 				</Flex>
 			)}
+			<EditCarModal carData={car} setEditIsOpen={setEditIsOpen} editIsOpen={editIsOpen}/>
 		</Box>
 	);
 };

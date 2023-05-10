@@ -2,6 +2,7 @@ import { FieldError, Merge, UseFormRegisterReturn } from "react-hook-form";
 
 import { mandatoryChildren } from "./childrenProps";
 import { Dispatch, SetStateAction } from "react";
+import { icarResponse } from "./cars.type";
 
 export interface iLinkProps extends mandatoryChildren {
 	path: string;
@@ -43,3 +44,8 @@ export type iResultMessageProps = mandatoryChildren & {
 	style: "single" | "doble";
 	text?: string;
 };
+export interface iEditCarModal {
+	editIsOpen: boolean;
+	setEditIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+	carData: icarResponse;
+}

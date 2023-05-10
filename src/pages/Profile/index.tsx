@@ -14,7 +14,7 @@ const Profile = () => {
 
 	const [ isOpen, setIsOpen] = useState(false);
 	const [ isOwner, setIsOwner] = useState(false);
-	const [isSeller, setIsSeller] = useState(localStorage.getItem("isSeller@shopCar"));
+	const [isSeller, setIsSeller] = useState(Boolean(localStorage.getItem("isSeller@shopCar")));
 	const [userCars, setUserCars] = useState<null | any[]>(null);
 	
 	const {id} = useParams()
@@ -37,7 +37,7 @@ const Profile = () => {
 		}
 		setInitialData()
 
-	},[isOpen])
+	},[, isOpen])
 	return (
 		<VStack
 			minH="100vh"
@@ -70,7 +70,23 @@ const Profile = () => {
 			>
 			{
 				userCars && userCars.map((item) => (
-					<ProductCard buttons={true} owner={{name: item.user.name, id: item.user.id}} padding="3rem 0 0 0" id={item.id} km={item.km} year={item.year} imageUrl={item.images.cover} imageAlt={item.model} carTitle={item.model} carDescription={item.description? item.description : "Anúncio sem descrição"} formattedPrice={Number(item.price).toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })} key={item.id} />
+					<ProductCard 
+						buttons={true}
+						car={item}
+						owner={{name: item.user.name, id: item.user.id}}
+						padding="3rem 0 0 0"
+						id={item.id}
+						km={item.km}
+						year={item.year}
+						imageUrl={item.images.cover}
+						imageAlt={item.model}
+						carTitle={item.model}
+						carDescription={item.description?
+						item.description : "Anúncio sem descrição"}
+						formattedPrice={Number(item.price).toLocaleString('pt-br', { 
+							style: 'currency', currency: 'BRL' 
+						})}
+						key={item.id} />
 				))
 			}
 			</Flex>
