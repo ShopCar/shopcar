@@ -1,27 +1,25 @@
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import {
 	Box,
-	Button,
-	Flex,
-	Heading,
-	IconButton,
 	Text,
 	VStack,
+	Button,
+	Heading,
 	useColorModeValue
 } from "@chakra-ui/react";
-import { CheckCircleIcon } from "@chakra-ui/icons";
 
 import { useUserContext } from "../../contexts/userContext";
 
+import ResultMessage from "./ResultMessage";
 import InputForm from "../../components/Input";
 import NavLink from "../../components/NavLink";
+import ContainerForm from "../../components/ContainerForm";
 
 import { iSendResetPasswordEmail } from "../../types/userForms";
 import { sendResetPasswordSchema } from "../../schemas/userForms";
-import { useState } from "react";
-import ContainerForm from "../../components/ContainerForm";
 
 const SendResetPasswordEmail = () => {
 	const { requestResetPassword } = useUserContext();
@@ -47,14 +45,28 @@ const SendResetPasswordEmail = () => {
 
 	return (
 		<ContainerForm>
-			{isSubmitted && sucessMessage ? (
-				<VStack w="full" align="center" justifyContent="center" spacing="1rem">
-					<CheckCircleIcon color={icColor} boxSize="3rem" />
-					<Heading size="6">{sucessMessage}!</Heading>
-					<Text size="2" textAlign="justify">
-						Por favor, verifique seu e-mail.
-					</Text>
-				</VStack>
+			{isSubmitted ? (
+				<>
+					{sucessMessage && (
+						<ResultMessage
+							type="success"
+							style="doble"
+							text="Por favor, verifique seu e-mail."
+						>
+							E-mail enviado com sucesso!
+						</ResultMessage>
+					)}
+
+					{!sucessMessage && (
+						<ResultMessage
+							type="error"
+							style="doble"
+							text="Por favor, tente novamente mais tarde."
+						>
+							Error ao enviar o e-mail!
+						</ResultMessage>
+					)}
+				</>
 			) : (
 				<VStack w="full" spacing="1rem">
 					<NavLink path="/login" type="router">

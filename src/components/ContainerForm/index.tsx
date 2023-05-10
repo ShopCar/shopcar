@@ -23,7 +23,7 @@ const ContainerForm = ({ children }: mandatoryChildren) => {
 				px="28px"
 				gap="10px"
 				borderRadius="4px"
-				w={{ base: "full", xs: "300px", lg: "410px" }}
+				w={{ base: "full", xs: "305px", lg: "410px" }}
 				justifyContent="center"
 			>
 				{children}

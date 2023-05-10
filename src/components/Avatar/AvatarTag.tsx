@@ -5,6 +5,17 @@ import { useNavigate } from "react-router-dom";
 
 const AvatarTag = ({ name, color, id }: iAvatarProps) => {
 	const navigate = useNavigate();
+
+	const hoverConfig = {
+		"&:hover": {
+			cursor: "pointer",
+			".label": {
+				color: "brand.1",
+				transition: "all 0.5s ease-out"
+			}
+		}
+	};
+
 	return (
 		<>
 			{id ? (
@@ -14,18 +25,14 @@ const AvatarTag = ({ name, color, id }: iAvatarProps) => {
 					background="none"
 					w="fit-content"
 					pl="0"
+					sx={hoverConfig}
 					border="none"
+					onClick={() => navigate(`/profile/${id}`)}
 				>
-					<Avatar
-						size="sm"
-						name={name}
-						mr={4}
-						backgroundColor={color}
-						onClick={() => navigate(`/profile/${id}`)}
-					/>
+					<Avatar size="sm" name={name} mr={4} backgroundColor={color} />
 					<TagLabel
-						onClick={() => navigate(`/profile/${id}`)}
 						color={useColorModeValue("grey.2", "grey.10")}
+						className="label"
 					>
 						{name}
 					</TagLabel>
