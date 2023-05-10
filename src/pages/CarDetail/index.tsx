@@ -9,15 +9,18 @@ import {
     Button,
     Avatar,
     Textarea,
+    background,
 } from "@chakra-ui/react";
 import CarPhotos from "../../components/CarPhotos";
 import Comment from "../../components/Comment";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { icurrentCar } from "../../types/cars.type";
+import { icarResponse, icurrentCar } from "../../types/cars.type";
 import api from "../../services/api";
 import { iComment } from "../../types/comments";
 import { useUserContext } from "../../contexts/userContext";
+import { AxiosResponse } from "axios";
+import NavLink from "../../components/NavLink";
 
 const CarDetail = () => {
     const { user, setUser } = useUserContext();
@@ -36,8 +39,15 @@ const CarDetail = () => {
                 });
                 setUser(userData.data);
 
-                const { data } = await api(`/cars/${id}`);
-                setCurrentCar(data);
+                const { data }: AxiosResponse<icarResponse> = await api(`/cars/${id}`);
+                const {user, ...carData} = data
+                setCurrentCar({
+                    ...carData,
+                    userId: user.id,
+                    userName: user.name,
+                    userDescription: user.description? user.description : "Anunciante sem descrição",
+                    userPhone: user.phone
+                });
 
                 const response = await api(`/comments/cars/${data.id}`);
                 setComments(response.data);
@@ -69,11 +79,13 @@ const CarDetail = () => {
         <VStack
             h="100%"
             bgGradient="linear-gradient(brand.1, brand.1 65vh, grey.7 65vh)"
+            pb="35px"
         >
-            <Flex w="full" pt={"90px"} justifyContent="center" gap="50px">
+            <Flex w="full" pt={"90px"} justifyContent="center" gap="50px" flexDirection={{base: "column", sm:  "row"}}>
                 <Box
                     w="45%"
-                    h="235px"
+                    h="100%"
+                    maxH="235px"
                     backgroundColor="grey.10"
                     borderRadius="3px"
                 >
@@ -82,7 +94,9 @@ const CarDetail = () => {
                         alt={currentCar ? currentCar.model : "Car"}
                         borderRadius="5px"
                         margin="0 auto"
-                        maxH="100%"
+                        alignItems="center"
+                        h="100%"
+                        maxH="235px"
                     />
                 </Box>
                 <CarPhotos
@@ -127,9 +141,9 @@ const CarDetail = () => {
                                 )}
                             </Text>
                         </Flex>
-                        <Button variant="brand1" size="small">
+                        <NavLink variant="brand1" type="external" path={`api.whatsapp.com/send?phone=+55+${currentCar?.userPhone}&text=Ol%C3%A1%2C%20venho%20por%20meio%20do%20seu%20portf%C3%B3lio%20na%20internet%2C%20gostaria%20de%20conhecer%20melhor%20seus%20servi%C3%A7os`}>
                             Comprar
-                        </Button>
+                        </NavLink>
                     </Flex>
                     <Flex
                         flexDirection="column"
@@ -149,101 +163,10 @@ const CarDetail = () => {
                                 : "Anúncio sem descrição"}
                         </Text>
                     </Flex>
-                    <VStack
-                        w="100%"
-                        minH="22.75vh"
-                        backgroundColor="grey.10"
-                        padding="20px"
-                        borderRadius="3px"
-                        alignItems="start"
-                    >
-                        <Heading as="h3" size="6" textAlign="start">
-                            Comentários
-                        </Heading>
-                        {comments?.map((comment: any) => (
-                            <Comment
-                                userName={comment.user.name
-                                    .split(" ")
-                                    .filter(
-                                        (name: string, index: number) =>
-                                            index === 0 || index === 1
-                                    )
-                                    .join(" ")}
-                                comment={comment.comment}
-                                time="há 5 dias"
-                                color="#E34D8C"
-                            />
-                        ))}
-                    </VStack>
-                    <Box
-                        mt="35px"
-                        w="100%"
-                        h="42.25vh"
-                        backgroundColor="grey.10"
-                        borderRadius="3px"
-                        padding="20px"
-                    >
-                        <Flex gap="8px" alignItems="center">
-                            <Avatar
-                                mr="10px"
-                                name={user?.name}
-                                size="sm"
-                                backgroundColor="#153D2E"
-                            ></Avatar>
-                            <Heading mr="15px" as="h3" size="7" variant="500">
-                                {user?.name
-                                    .split(" ")
-                                    .filter(
-                                        (name, index) =>
-                                            index === 0 || index === 1
-                                    )
-                                    .join(" ")}
-                            </Heading>
-                        </Flex>
-                        <VStack w="full">
-                            <Textarea
-                                placeholder="Deixe aqui seu comentário..."
-                                onChange={(e) => setComment(e.target.value)}
-                                value={comment ? comment : ""}
-                            />
-                            <Button
-                                onClick={() => {
-                                    postComment();
-                                    setComment("");
-                                }}
-                                variant="brand1"
-                                p="8px"
-                            >
-                                Comentar
-                            </Button>
-                            <Badge
-                                variant="negative"
-                                color="#E9ECEF"
-                                onClick={(e) => setComment(e.target.innerHTML)}
-                            >
-                                Gostei muito!
-                            </Badge>
-                            <Badge
-                                variant="negative"
-                                color="#E9ECEF"
-                                onClick={(e) => setComment(e.target.innerHTML)}
-                            >
-                                Incrivel!
-                            </Badge>
-                            <Badge
-                                variant="negative"
-                                color="#E9ECEF"
-                                onClick={(e) => setComment(e.target.innerHTML)}
-                            >
-                                Recomendarei para meus amigos!
-                            </Badge>
-                        </VStack>
-                    </Box>
                 </VStack>
                 <Box
-                    mt="35px"
                     w="25%"
-                    h="42.25vh"
+                    h="100%"
                     backgroundColor="grey.10"
                     borderRadius="3px"
                     padding="20px"
@@ -255,12 +178,10 @@ const CarDetail = () => {
                             backgroundColor="brand.1"
                         ></Avatar>
                         <Heading as="h3" size="6" variant="500">
-                            Samuel Leão
+                            {currentCar?.userName}
                         </Heading>
                         <Text textAlign="center">
-                            Lorem Ipsum is simply dummy text of the printing and
-                            typesetting industry. Lorem Ipsum has been the
-                            industry's
+                            {currentCar?.userDescription}
                         </Text>
                         <Button padding="8px 15px" fontWeight="400">
                             Ver Todos Anúncios
@@ -268,6 +189,127 @@ const CarDetail = () => {
                     </VStack>
                 </Box>
             </Flex>
+            <VStack
+                w="45%"
+                minH="22.75vh"
+                backgroundColor="grey.10"
+                padding="20px"
+                borderRadius="3px"
+                alignItems="start"
+            >
+                <Heading as="h3" size="6" textAlign="start">
+                    Comentários
+                </Heading>
+                {comments?.map((comment: any) => (
+                    <Comment
+                        userName={comment.user.name
+                            .split(" ")
+                            .filter(
+                                (name: string, index: number) =>
+                                    index === 0 || index === 1
+                            )
+                            .join(" ")}
+                        comment={comment.comment}
+                        time="há 5 dias"
+                        color="#E34D8C"
+                    />
+                ))}
+            </VStack>
+            <Box
+                mt="35px"
+                w="45%"
+                h="100%"
+                backgroundColor="grey.10"
+                borderRadius="3px"
+                padding="20px"
+            >
+                <Flex gap="8px" alignItems="center">
+                    <Avatar
+                        mr="10px"
+                        name={user?.name}
+                        size="sm"
+                        backgroundColor="#153D2E"
+                    ></Avatar>
+                    <Heading mr="15px" as="h3" size="7" variant="500">
+                        {user?.name
+                            .split(" ")
+                            .filter(
+                                (name, index) =>
+                                    index === 0 || index === 1
+                            )
+                            .join(" ")}
+                    </Heading>
+                </Flex>
+                <VStack
+                    w="full"
+                >
+                    <Flex
+                        mt="15px"
+                        mb="15px"
+                        p="8px"
+                        w="full"
+                        align="end"
+                        border="solid 2px"
+                        borderColor="grey.7"
+                    >
+                        <textarea
+                            style={{width: "100%", minHeight: "100px"}}
+                            placeholder="Deixe aqui seu comentário..."
+                            onChange={(e) => setComment(e.target.value)}
+                            value={comment ? comment : ""}
+                        />
+                        <Button
+                            onClick={() => {
+                                postComment();
+                                setComment("");
+                            }}
+                            size="small"
+                            variant="brand1"
+                            p="8px"
+                        >
+                            Comentar
+                        </Button>
+                    </Flex>
+                    <Flex
+                        w="full"
+                        gap="10px"
+                    >
+                        <Button
+                            fontSize="14px"
+                            variant="negative"
+                            color="grey.3"
+                            bg="grey.7"
+                            p="8px 15px"
+                            borderRadius="20px"
+                            onClick={(e) => setComment(e.target.innerHTML)}
+                        >
+                            Gostei muito!
+                        </Button>
+                        <Button
+                            fontSize="14px"
+                            variant="negative"
+                            color="grey.3"
+                            bg="grey.7"
+                            p="8px 15px"
+                            borderRadius="20px"
+                            onClick={(e) => setComment(e.target.innerHTML)}
+                        >
+                            Incrivel!
+                        </Button>
+                        <Button
+                            fontSize="14px"
+                            variant="negative"
+                            color="grey.3"
+                            bg="grey.7"
+                            p="8px 15px"
+                            borderRadius="20px"
+                            onClick={(e) => setComment(e.target.innerHTML)}
+                        >
+                            Recomendarei para meus amigos!
+                        </Button>
+                    </Flex>
+                </VStack>
+            </Box>
         </VStack>
     );
 };

@@ -59,11 +59,30 @@ const outline = defineStyle({
 	}
 });
 
+const brand1 = defineStyle({
+	bg: "brand.1",
+	p: "3px 0",
+	w: "110px",
+	fontSize: "16px",
+	textAlign: "center",
+	borderRadius: "4px",
+	color: "white",
+	_hover: {
+		bg: "brand.2",
+		textDecoration: "none"
+	},
+	_activeLink: {
+		bg: "brand.2",
+		textDecoration: "none"
+	}
+});
+
 const Link: ComponentStyleConfig = {
 	baseStyle: {},
 	variants: {
 		standard,
-		outline
+		outline,
+		brand1
 	},
 	defaultProps: {
 		variant: "standard"

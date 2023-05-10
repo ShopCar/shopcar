@@ -10,7 +10,7 @@ const CarPhotos = ({photos}: iCarPhotosProps) => {
 			<Flex
 				as="section"
 				w="25%"
-				h="250px"
+				h="100%"
 				flexDirection="column"
 				justifyContent="space-around"
 				padding="15px"
@@ -22,6 +22,7 @@ const CarPhotos = ({photos}: iCarPhotosProps) => {
 					size="6"
 					h="10%"
 					variant="600"
+					mb="5px"
 				>
 					Fotos
 				</Heading>
@@ -35,6 +36,7 @@ const CarPhotos = ({photos}: iCarPhotosProps) => {
 						<Image
 						key={index}
 						src={photo}
+						mb="8px"
 						alt={`car image ${index+1}`}
 						maxWidth="30%"
 						maxHeight="30%"

@@ -71,6 +71,10 @@ export interface icurrentCar {
         cover: string;
         gallery: string[];
     };
+    userId: string;
+    userName: string;
+    userDescription: string;
+    userPhone: string;
 }
 
 export interface iCarComments {
