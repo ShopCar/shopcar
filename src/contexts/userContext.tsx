@@ -1,6 +1,6 @@
 import { AxiosError } from "axios";
+import { useNavigate, useParams } from "react-router-dom";
 import { createContext, useContext, useState } from "react";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 import api from "../services/api";
 import {
@@ -14,16 +14,16 @@ import {
 	iUserResetPassword,
 	iSendResetPasswordEmail
 } from "../types/userForms";
+import { mandatoryChildren } from "../types/childrenProps";
 
 export const UserContext = createContext({} as iUserContextProps);
 
-export const UserProvider = ({ children }: any) => {
+export const UserProvider = ({ children }: mandatoryChildren) => {
 	const { toast } = useToastForm();
 
 	const [user, setUser] = useState<null | iUser>(null);
 
 	const navigate = useNavigate();
-	const location = useLocation();
 	const pathParams = useParams();
 
 	const login = async (data: iLoginForm) => {
@@ -66,13 +66,7 @@ export const UserProvider = ({ children }: any) => {
 			const requestError = error as AxiosError<iApiMessage>;
 			const message =
 				requestError.response?.data.message || requestError.message;
-			console.log(message);
-			toast({
-				title: "error",
-				message: message,
-				position: "top-left",
-				color: "red.500"
-			});
+			console.error(message);
 		}
 	};
 
@@ -89,13 +83,7 @@ export const UserProvider = ({ children }: any) => {
 			const requestError = error as AxiosError<iApiMessage>;
 			const message =
 				requestError.response?.data.message || requestError.message;
-			console.log(message);
-			toast({
-				title: "error",
-				message: message,
-				position: "top-left",
-				color: "red.500"
-			});
+			console.error(message);
 		}
 	};
 

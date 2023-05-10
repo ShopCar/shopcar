@@ -2,26 +2,17 @@ import { useState } from "react";
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-
-import {
-	Box,
-	Button,
-	Flex,
-	Heading,
-	Text,
-	VStack,
-	useColorModeValue
-} from "@chakra-ui/react";
-import { CheckCircleIcon } from "@chakra-ui/icons";
+import { Box, Button, Heading, VStack } from "@chakra-ui/react";
 
 import { useUserContext } from "../../contexts/userContext";
 
+import ResultMessage from "./ResultMessage";
 import InputForm from "../../components/Input";
 import NavLink from "../../components/NavLink";
+import ContainerForm from "../../components/ContainerForm";
 
 import { iUserResetPassword } from "../../types/userForms";
 import { userResetPasswordSchema } from "../../schemas/userForms";
-import ContainerForm from "../../components/ContainerForm";
 
 const UserResetPassword = () => {
 	const { userResetPassword } = useUserContext();
@@ -43,15 +34,22 @@ const UserResetPassword = () => {
 		setSucessMessage(message);
 	};
 
-	const icColor = useColorModeValue("brand.1", "brand.2");
-
 	return (
 		<ContainerForm>
-			{isSubmitted && sucessMessage ? (
-				<VStack w="full" align="center" justifyContent="center" spacing="1rem">
-					<CheckCircleIcon color={icColor} boxSize="3rem" />
-					<Heading size="6">{sucessMessage}!</Heading>
-				</VStack>
+			{isSubmitted ? (
+				<>
+					{sucessMessage && (
+						<ResultMessage type="success" style="single">
+							A senha foi atualizada com sucesso!
+						</ResultMessage>
+					)}
+
+					{!sucessMessage && (
+						<ResultMessage type="error" style="single">
+							Ops, link inválido ou expirado!
+						</ResultMessage>
+					)}
+				</>
 			) : (
 				<VStack w="full" spacing="1rem">
 					<NavLink path="/login" type="router">
