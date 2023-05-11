@@ -48,7 +48,6 @@ const CarDetail = () => {
 
 				const { data }: AxiosResponse<icarResponse> = await api(`/cars/${id}`);
 				const { user, ...carData } = data;
-				console.log(data);
 
 				setCurrentCar({
 					...carData,
@@ -69,7 +68,7 @@ const CarDetail = () => {
 
 		getInitialData();
 	}, []);
-	console.log(currentCar);
+	console.log(comments);
 
 	const postComment = async () => {
 		try {
@@ -239,6 +238,9 @@ const CarDetail = () => {
 							</Heading>
 							{comments?.map((comment: any, index: number) => (
 								<Comment
+									setComments={setComments}
+									comments={comments}
+									commentData={comment}
 									key={index}
 									userName={comment.user.name
 										.split(" ")
@@ -300,12 +302,6 @@ const CarDetail = () => {
 										placeholder="Deixe aqui seu comentário..."
 										onChange={e => setComment(e.target.value)}
 									/>
-									{/* <textarea
-										style={{ width: "100%", minHeight: "100px" }}
-										placeholder="Deixe aqui seu comentário..."
-										onChange={e => setComment(e.target.value)}
-										value={comment ? comment : ""}
-									/> */}
 									<Button
 										p="8px"
 										size="small"
