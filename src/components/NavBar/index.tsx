@@ -6,7 +6,7 @@ import ThemeSelector from "../ThemeSelector";
 const NavBar = () => {
 	return (
 		<>
-			<Box w="full">
+			<Box w="full" overflow="hidden">
 				<Flex
 					h="60px"
 					w="full"

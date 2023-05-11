@@ -5,7 +5,8 @@ import {
 	Image,
 	Heading,
 	Flex,
-	Button
+	Button,
+	VStack
 } from "@chakra-ui/react";
 
 import AvatarTag from "../Avatar/AvatarTag";
@@ -51,16 +52,18 @@ const ProductCard = ({
 	const navigate = useNavigate();
 	const boxCardConfig = {
 		"&:hover": {
-			cursor: "pointer",
-			"div:first-of-type": {
+			shadow: "lg",
+			"figure:first-of-type": {
 				borderColor: "brand.1",
 				transition: "all 0.5s ease-out"
 			}
 		}
 	};
+	const divCommum = { justifyContent: "space-between", px: "0.5rem" };
+	const hoverCommum = { color: "brand.1", cursor: "pointer" };
 
 	const { user, setUser } = useUserContext();
-	const [editIsOpen, setEditIsOpen] = useState(false)
+	const [editIsOpen, setEditIsOpen] = useState(false);
 
 	useEffect(() => {
 		const setInitialData = async () => {
@@ -80,12 +83,12 @@ const ProductCard = ({
 			id={id}
 			gap="16px"
 			width="270px"
-			height="420px"
+			height="390px"
 			display="flex"
 			flexDir="column"
 			overflow="hidden"
 			sx={boxCardConfig}
-			padding={padding}
+			margin={padding}
 		>
 			<Box
 				as="figure"
@@ -95,63 +98,85 @@ const ProductCard = ({
 				border="2px solid"
 				justifyContent="center"
 				borderColor="transparent"
-				bgColor="grey.7"
 				onClick={() => navigate(`/cars/${id}`)}
 			>
-				<Image maxW="262px" src={imageUrl} alt={imageAlt} />
+				<Image src={imageUrl} alt={imageAlt} title={imageAlt} />
 			</Box>
-			<Heading
-				size="7"
-				variant="600"
-				h="20px"
-				textOverflow="ellipsis"
-				overflow="hidden"
-				whiteSpace="nowrap"
-				onClick={() => navigate(`/cars/${id}`)}
+			<VStack
+				w="inherit"
+				h="135px"
+				gap="0.5rem"
+				alignItems="flex-start"
+				px="0.5rem"
 			>
-				{carTitle}
-			</Heading>
+				<Heading
+					size="7"
+					h="20px"
+					w="100%"
+					variant="600"
+					overflow="hidden"
+					whiteSpace="nowrap"
+					_hover={hoverCommum}
+					textOverflow="ellipsis"
+					onClick={() => navigate(`/cars/${id}`)}
+				>
+					{carTitle}
+				</Heading>
 
-			<Text
-				size="2"
-				variant="400"
-				h="48px"
-				display="flex"
-				alignItems="center"
-				textOverflow="ellipsis"
-				whiteSpace="nowrap"
-				overflow="hidden"
-			>
-				{carDescription}
-			</Text>
+				<Text
+					size="2"
+					w="100%"
+					h="50px"
+					variant="400"
+					display="flex"
+					overflow="hidden"
+					mt="0px!important"
+					alignItems="center"
+					whiteSpace="nowrap"
+					textOverflow="ellipsis"
+				>
+					{carDescription}
+				</Text>
 
-			<AvatarTag name={owner.name} id={owner.id} />
-
-			<Box maxW="100%" display="flex" justifyContent="space-between">
-				<Box display="flex" gap="12px">
-					<Badge p="0" variant="opacity">
+				<AvatarTag name={owner.name} id={owner.id} />
+			</VStack>
+			<Flex maxW="100%" alignItems="center" {...divCommum}>
+				<Flex gap="12px" h="24px">
+					<Badge p="0 4px" variant="opacity">
 						{km}
 					</Badge>
-					<Badge p="0" variant="opacity">
+					<Badge p="0 4px" variant="opacity">
 						{year}
 					</Badge>
-				</Box>
+				</Flex>
 
 				<Heading size="7" variant="500" marginRight="3px">
 					{formattedPrice}
 				</Heading>
-			</Box>
+			</Flex>
 			{buttons && owner.id === localStorage.getItem("UUID@shopCar") && (
-				<Flex justifyContent="space-between">
-					<Button p="5px" variant="outline1" onClick={() => setEditIsOpen(true)}>
+				<Flex {...divCommum} mt="-6px" alignItems="flex-start">
+					<Button
+						p="5px"
+						variant="outline1"
+						onClick={() => setEditIsOpen(true)}
+					>
 						Editar
 					</Button>
-					<Button onClick={() => navigate(`/cars/${id}`)} p="5px" variant="outline1">
+					<Button
+						p="5px"
+						variant="outline1"
+						onClick={() => navigate(`/cars/${id}`)}
+					>
 						Ver detalhes
 					</Button>
 				</Flex>
 			)}
-			<EditCarModal carData={car} setEditIsOpen={setEditIsOpen} editIsOpen={editIsOpen}/>
+			<EditCarModal
+				carData={car}
+				setEditIsOpen={setEditIsOpen}
+				editIsOpen={editIsOpen}
+			/>
 		</Box>
 	);
 };

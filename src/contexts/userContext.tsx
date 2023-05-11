@@ -1,5 +1,5 @@
 import { AxiosError } from "axios";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { createContext, useContext, useState } from "react";
 
 import api from "../services/api";
@@ -24,6 +24,7 @@ export const UserProvider = ({ children }: mandatoryChildren) => {
 	const [user, setUser] = useState<null | iUser>(null);
 
 	const navigate = useNavigate();
+	const location = useLocation();
 	const pathParams = useParams();
 
 	const login = async (data: iLoginForm) => {
@@ -42,7 +43,9 @@ export const UserProvider = ({ children }: mandatoryChildren) => {
 				position: "top-left",
 				color: "green.500"
 			});
-			navigate("/");
+
+			const toPath: string = location.state?.from?.pathname || "/";
+			navigate(toPath, { replace: true });
 		} catch (error: any) {
 			console.log(error);
 			toast({

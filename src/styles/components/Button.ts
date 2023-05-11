@@ -2,13 +2,13 @@ import { mode } from "@chakra-ui/theme-tools";
 import { ComponentStyleConfig, StyleFunctionProps } from "@chakra-ui/react";
 
 const standard = (props: StyleFunctionProps) => ({
-	bg: mode("grey.0", "grey.5")(props),
-	color: mode("white", "grey.0")(props),
+	bg: "grey.0",
+	color: "white",
 	_hover: {
-		bg: mode("grey.1", "grey.5")(props)
+		bg: "grey.1"
 	},
 	_active: {
-		bg: mode("grey.1", "grey.5")(props)
+		bg: "grey.1"
 	}
 });
 
@@ -37,6 +37,13 @@ const brand1 = (props: StyleFunctionProps) => ({
 	},
 	_active: {
 		bg: "brand.2"
+	},
+	_disabled: {
+		bg: "grey.3",
+		cursor: "not-allowed",
+		_hover: {
+			bg: "grey.3!important"
+		}
 	}
 });
 
