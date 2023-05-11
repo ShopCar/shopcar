@@ -1,20 +1,20 @@
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
 	Box,
 	Text,
+	Flex,
 	Badge,
 	Image,
-	Heading,
-	Flex,
 	Button,
-	VStack
+	VStack,
+	Heading,
+	useColorModeValue
 } from "@chakra-ui/react";
 
 import AvatarTag from "../Avatar/AvatarTag";
-import { Navigate, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { useUserContext } from "../../contexts/userContext";
-import api from "../../services/api";
 import EditCarModal from "../EditCarModal";
+import { useUserContext } from "../../contexts/userContext";
 
 interface iPropertyProps {
 	id?: string;
@@ -59,29 +59,23 @@ const ProductCard = ({
 			}
 		}
 	};
+	const bdColor = useColorModeValue("grey.8", "grey.2");
+	const color = useColorModeValue("brand.1", "brand.3");
+	const bgCommum = useColorModeValue("grey.10", "grey.2");
+	const hoverCommum = {
+		color,
+		cursor: "pointer"
+	};
 	const divCommum = { justifyContent: "space-between", px: "0.5rem" };
-	const hoverCommum = { color: "brand.1", cursor: "pointer" };
 
 	const { user, setUser } = useUserContext();
 	const [editIsOpen, setEditIsOpen] = useState(false);
 
-	useEffect(() => {
-		const setInitialData = async () => {
-			const uuid = localStorage.getItem("UUID@shopCar");
-
-			const { data } = await api(`/users/${uuid}`, {
-				headers: {
-					Authorization: `Bearer ${localStorage.getItem("token@shopCar")}`
-				}
-			});
-			setUser(data);
-		};
-		setInitialData();
-	}, []);
 	return (
 		<Box
 			id={id}
 			gap="16px"
+			bg={bgCommum}
 			width="270px"
 			height="390px"
 			display="flex"
@@ -97,7 +91,7 @@ const ProductCard = ({
 				height="152px"
 				border="2px solid"
 				justifyContent="center"
-				borderColor="transparent"
+				borderColor={bdColor}
 				onClick={() => navigate(`/cars/${id}`)}
 			>
 				<Image src={imageUrl} alt={imageAlt} title={imageAlt} />
@@ -138,7 +132,11 @@ const ProductCard = ({
 					{carDescription}
 				</Text>
 
-				<AvatarTag name={owner.name} id={owner.id} />
+				<AvatarTag
+					name={owner.name}
+					id={owner.id}
+					color={owner.id === user?.id ? "brand.1" : ""}
+				/>
 			</VStack>
 			<Flex maxW="100%" alignItems="center" {...divCommum}>
 				<Flex gap="12px" h="24px">

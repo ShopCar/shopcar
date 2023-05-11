@@ -25,7 +25,6 @@ const Home = () => {
 			const { data } = await api("/cars");
 			setAllCars(data);
 			setBrands(await getCarsBrands());
-			console.log(data);
 		};
 		getInicialData();
 	}, []);

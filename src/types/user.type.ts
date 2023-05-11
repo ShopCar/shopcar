@@ -11,6 +11,23 @@ export interface iUser {
 	updatedAt: string;
 }
 
-export interface iUserComments extends iUser{
+export interface iUserComments extends iUser {
 	resetToken: null | string;
 }
+
+export type iAddress = {
+	id: string;
+	zipCode: string;
+	state: string;
+	city: string;
+	district: string;
+	street: string;
+	number?: string;
+	complement?: String;
+	createdAt: string;
+	updatedAt: string;
+};
+
+export type iUserProfile = iUser & {
+	address: iAddress;
+};
