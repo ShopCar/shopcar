@@ -3,7 +3,7 @@ import { Avatar } from "@chakra-ui/react";
 import { iAvatarProps } from "../../types/compoments";
 
 const AvatarInitials = ({ name, color }: iAvatarProps) => {
-	return <Avatar name={name} size="sm" backgroundColor={color} />;
+	return <Avatar name={name} size="sm" backgroundColor={color} color="white" />;
 };
 
 export default AvatarInitials;

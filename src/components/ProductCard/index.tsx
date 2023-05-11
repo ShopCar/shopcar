@@ -1,23 +1,25 @@
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
 	Box,
 	Text,
+	Flex,
 	Badge,
 	Image,
+	Button,
+	VStack,
 	Heading,
-	useColorModeValue,
-	Flex,
-	Button
+	useColorModeValue
 } from "@chakra-ui/react";
 
 import AvatarTag from "../Avatar/AvatarTag";
-import { Navigate, useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import EditCarModal from "../EditCarModal";
 import { useUserContext } from "../../contexts/userContext";
-import api from "../../services/api";
 
 interface iPropertyProps {
 	id?: string;
 	km: string;
+	car?: any;
 	year: number;
 	imageUrl: string;
 	imageAlt: string;
@@ -35,6 +37,7 @@ interface iPropertyProps {
 
 const ProductCard = ({
 	id,
+	car,
 	km,
 	owner,
 	year,
@@ -49,40 +52,37 @@ const ProductCard = ({
 	const navigate = useNavigate();
 	const boxCardConfig = {
 		"&:hover": {
-			cursor: "pointer",
-			"div:first-of-type": {
+			shadow: "lg",
+			"figure:first-of-type": {
 				borderColor: "brand.1",
 				transition: "all 0.5s ease-out"
 			}
 		}
 	};
+	const bdColor = useColorModeValue("grey.8", "grey.2");
+	const color = useColorModeValue("brand.1", "brand.3");
+	const bgCommum = useColorModeValue("grey.10", "grey.2");
+	const hoverCommum = {
+		color,
+		cursor: "pointer"
+	};
+	const divCommum = { justifyContent: "space-between", px: "0.5rem" };
 
 	const { user, setUser } = useUserContext();
+	const [editIsOpen, setEditIsOpen] = useState(false);
 
-	useEffect(() => {
-		const setInitialData = async () => {
-			const uuid = localStorage.getItem("UUID@shopCar");
-
-			const { data } = await api(`/users/${uuid}`, {
-				headers: {
-					Authorization: `Bearer ${localStorage.getItem("token@shopCar")}`
-				}
-			});
-			setUser(data);
-		};
-		setInitialData();
-	}, []);
 	return (
 		<Box
 			id={id}
 			gap="16px"
+			bg={bgCommum}
 			width="270px"
-			height="420px"
+			height="390px"
 			display="flex"
 			flexDir="column"
 			overflow="hidden"
 			sx={boxCardConfig}
-			padding={padding}
+			margin={padding}
 		>
 			<Box
 				as="figure"
@@ -91,63 +91,90 @@ const ProductCard = ({
 				height="152px"
 				border="2px solid"
 				justifyContent="center"
-				borderColor="transparent"
-				bgColor="grey.7"
+				borderColor={bdColor}
 				onClick={() => navigate(`/cars/${id}`)}
 			>
-				<Image maxW="262px" src={imageUrl} alt={imageAlt} />
+				<Image src={imageUrl} alt={imageAlt} title={imageAlt} />
 			</Box>
-			<Heading
-				onClick={() => navigate(`/cars/${id}`)}
-				size="7"
-				variant="600"
-				h="20px"
-				textOverflow="ellipsis"
-				overflow="hidden"
-				whiteSpace="nowrap"
+			<VStack
+				w="inherit"
+				h="135px"
+				gap="0.5rem"
+				alignItems="flex-start"
+				px="0.5rem"
 			>
-				{carTitle}
-			</Heading>
+				<Heading
+					size="7"
+					h="20px"
+					w="100%"
+					variant="600"
+					overflow="hidden"
+					whiteSpace="nowrap"
+					_hover={hoverCommum}
+					textOverflow="ellipsis"
+					onClick={() => navigate(`/cars/${id}`)}
+				>
+					{carTitle}
+				</Heading>
 
-			<Text
-				size="2"
-				variant="400"
-				h="48px"
-				display="flex"
-				alignItems="center"
-				textOverflow="ellipsis"
-				whiteSpace="nowrap"
-				overflow="hidden"
-			>
-				{carDescription}
-			</Text>
+				<Text
+					size="2"
+					w="100%"
+					h="50px"
+					variant="400"
+					display="flex"
+					overflow="hidden"
+					mt="0px!important"
+					alignItems="center"
+					whiteSpace="nowrap"
+					textOverflow="ellipsis"
+				>
+					{carDescription}
+				</Text>
 
-			<AvatarTag name={owner.name} id={owner.id} />
-
-			<Box maxW="100%" display="flex" justifyContent="space-between">
-				<Box display="flex" gap="12px">
-					<Badge p="0" variant="opacity">
+				<AvatarTag
+					name={owner.name}
+					id={owner.id}
+					color={owner.id === user?.id ? "brand.1" : ""}
+				/>
+			</VStack>
+			<Flex maxW="100%" alignItems="center" {...divCommum}>
+				<Flex gap="12px" h="24px">
+					<Badge p="0 4px" variant="opacity">
 						{km}
 					</Badge>
-					<Badge p="0" variant="opacity">
+					<Badge p="0 4px" variant="opacity">
 						{year}
 					</Badge>
-				</Box>
+				</Flex>
 
 				<Heading size="7" variant="500" marginRight="3px">
 					{formattedPrice}
 				</Heading>
-			</Box>
+			</Flex>
 			{buttons && owner.id === localStorage.getItem("UUID@shopCar") && (
-				<Flex justifyContent="space-between">
-					<Button p="5px" variant="outline1">
+				<Flex {...divCommum} mt="-6px" alignItems="flex-start">
+					<Button
+						p="5px"
+						variant="outline1"
+						onClick={() => setEditIsOpen(true)}
+					>
 						Editar
 					</Button>
-					<Button p="5px" variant="outline1">
+					<Button
+						p="5px"
+						variant="outline1"
+						onClick={() => navigate(`/cars/${id}`)}
+					>
 						Ver detalhes
 					</Button>
 				</Flex>
 			)}
+			<EditCarModal
+				carData={car}
+				setEditIsOpen={setEditIsOpen}
+				editIsOpen={editIsOpen}
+			/>
 		</Box>
 	);
 };
