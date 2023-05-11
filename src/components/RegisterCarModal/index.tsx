@@ -3,6 +3,7 @@ import {
   Flex,
   FormLabel,
   Heading,
+  Input,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -23,6 +24,7 @@ import { useToastForm } from "../../contexts/toastContext";
 import { z } from "zod";
 import { useCarContext } from "../../contexts/carContext";
 import { iCar } from "../../types/cars.type";
+import ImageUpload from "../InputImageFile";
 
 const RegisterCarModal = ({ isOpen, setIsOpen }: iRegisterCarModal) => {
   const { toast } = useToastForm();
@@ -46,6 +48,11 @@ const RegisterCarModal = ({ isOpen, setIsOpen }: iRegisterCarModal) => {
   const { brands, cars, setCars, getCarsByBrand } = useCarContext();
   const [car, setCar] = useState<iCar | null>(cars ? cars[0] : null);
   const [imgCount, setImgCount] = useState([0, 1]);
+  const [photoCover, setPhotoCover] = useState("");
+
+  useEffect(() => {
+    console.log(photoCover);
+  }, [photoCover]);
 
   useEffect(() => {
     const getCarsData = async () => {
@@ -265,16 +272,22 @@ const RegisterCarModal = ({ isOpen, setIsOpen }: iRegisterCarModal) => {
                 register={register("cover")}
                 error={errors.cover}
               />
+              <ImageUpload fcnt={(value: string) => setValue("cover", value)} />
               {imgCount.map((i) => (
-                <InputForm
-                  id={`${11 + i}`}
-                  key={`${11 + i}`}
-                  type="text"
-                  label={`${1 + i}ª imagem da galeria`}
-                  placeholder={`Link da ${1 + i}ª imagem`}
-                  register={register(`gallery.${i}`)}
-                  error={errors.gallery}
-                />
+                <>
+                  <InputForm
+                    id={`${11 + i}`}
+                    key={`${11 + i}`}
+                    type="text"
+                    label={`${1 + i}ª imagem da galeria`}
+                    placeholder={`Link da ${1 + i}ª imagem`}
+                    register={register(`gallery.${i}`)}
+                    error={errors.gallery}
+                  />
+                  <ImageUpload
+                    fcnt={(value: string) => setValue(`gallery.${i}`, value)}
+                  />
+                </>
               ))}
               <Button
                 variant={"brandOpacity"}
