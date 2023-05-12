@@ -1,19 +1,17 @@
 import {
-	Badge,
-	Box,
-	Flex,
-	Heading,
-	Image,
-	Text,
-	VStack,
-	Button,
-	Avatar,
-	Textarea,
-	background,
-	Stack,
+    Badge,
+    Box,
+    Flex,
+    Heading,
+    Image,
+    Text,
+    VStack,
+    Button,
+    Avatar,
+    Textarea,
+	useColorModeValue,
 	Grid,
 	GridItem,
-	useColorModeValue
 } from "@chakra-ui/react";
 import CarPhotos from "../../components/CarPhotos";
 import Comment from "../../components/Comment";
@@ -29,17 +27,17 @@ import AvatarTag from "../../components/Avatar/AvatarTag";
 import { AvatarProfile } from "../../components/Avatar";
 
 const CarDetail = () => {
-	const { user, setUser } = useUserContext();
-	const [currentCar, setCurrentCar] = useState<iCurrentCar | null>(null);
-	const [comments, setComments] = useState<iComment[] | null>(null);
-	const [comment, setComment] = useState<string | null>(null);
+    const { user, setUser } = useUserContext();
+    const [currentCar, setCurrentCar] = useState<iCurrentCar | null>(null);
+    const [comments, setComments] = useState<iComment[] | null>(null);
+    const [comment, setComment] = useState<string | null>(null);
+	const [imageCover, setImageCover] = useState<string>("");
 
-	const { id } = useParams();
-
-	useEffect(() => {
-		const getInitialData = async () => {
-			try {
-				const { data }: AxiosResponse<iCarResponse> = await api(`/cars/${id}`);
+    const { id } = useParams();
+    useEffect(() => {
+        const getInitialData = async () => {
+            try {
+                const { data }: AxiosResponse<iCarResponse> = await api(`/cars/${id}`);
 				const { user, ...carData } = data;
 
 				setCurrentCar({
@@ -52,31 +50,37 @@ const CarDetail = () => {
 					userPhone: user?.phone
 				});
 
-				const response = await api(`/comments/cars/${data.id}`);
-				setComments(response.data);
-			} catch (error) {
-				console.log(error);
-			}
-		};
+				const cover = carData?.imagesBase64.find(
+					(image: any) => (image.cover = true)
+				  );
+		  
+				  setImageCover("data:image/jpeg;base64," + cover?.imagemBase64);
 
-		getInitialData();
-	}, []);
+                const response = await api(`/comments/cars/${data.id}`);
+                setComments(response.data);
+            } catch (error) {
+                console.log(error);
+            }
+        };
 
-	const postComment = async () => {
-		try {
-			const token = localStorage.getItem("token@shopCar");
-			const { data } = await api.post(
-				`/comments/cars/${currentCar?.id}`,
-				{ comment },
-				{
-					headers: { Authorization: `Bearer ${token}` }
-				}
-			);
-			setComments([...comments!, data]);
-		} catch (error) {
-			console.log(error);
-		}
-	};
+        getInitialData();
+    }, []);
+
+    const postComment = async () => {
+        try {
+            const token = localStorage.getItem("token@shopCar");
+            const { data } = await api.post(
+                `/comments/cars/${currentCar?.id}`,
+                { comment },
+                {
+                    headers: { Authorization: `Bearer ${token}` },
+                }
+            );
+            setComments([...comments!, data]);
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
 	const btnCommum = {
 		bg: "grey.7",
@@ -125,7 +129,7 @@ const CarDetail = () => {
 								borderRadius="5px"
 								alignItems="center"
 								alt={currentCar ? currentCar.model : "Car"}
-								src={currentCar ? currentCar.images.cover : ""}
+								src={currentCar ? imageCover : ""}
 							/>
 						</Box>
 						<Flex
@@ -191,9 +195,7 @@ const CarDetail = () => {
 						mt={{ base: "16px", md: "0" }}
 					>
 						<CarPhotos
-							photos={String(currentCar?.images.gallery)
-								.replace(/[}"\{]/g, "")
-								.split(",")}
+							photos={currentCar?.imagesBase64}
 						/>
 						<Box
 							w="100%"
@@ -359,5 +361,5 @@ const CarDetail = () => {
 
 export default CarDetail;
 function async() {
-	throw new Error("Function not implemented.");
+    throw new Error("Function not implemented.");
 }

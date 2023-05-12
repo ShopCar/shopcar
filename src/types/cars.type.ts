@@ -20,6 +20,11 @@ export interface iCar {
 	fuel: number;
 	value: number;
 }
+export interface iImagesBase64 {
+	id: string;
+	cover: boolean;
+	imagemBase64: string;
+}
 
 export interface iCarResponse {
 	id: string;
@@ -51,6 +56,7 @@ export interface iCarResponse {
 		cover: string;
 		gallery: string[];
 	};
+	imagesBase64: iImagesBase64[];
 }
 
 export interface iCurrentCar {
@@ -66,11 +72,7 @@ export interface iCurrentCar {
 	price: string;
 	createdAt: string;
 	updatedAt: string;
-	images: {
-		id: string;
-		cover: string;
-		gallery: string[];
-	};
+	images: iImagesBase64;
 	userId: string;
 	userName: string;
 	userDescription: string;

@@ -2,7 +2,7 @@ import { Flex } from "@chakra-ui/layout";
 import { Heading, Image, useColorModeValue } from "@chakra-ui/react";
 
 interface iCarPhotosProps {
-	photos: Array<string> | undefined;
+  photos: { id: string; cover: boolean; imagemBase64: string }[] | undefined;
 }
 const CarPhotos = ({ photos }: iCarPhotosProps) => {
 	const bgColor = useColorModeValue("grey.10", "grey.2");
@@ -33,7 +33,7 @@ const CarPhotos = ({ photos }: iCarPhotosProps) => {
 					{photos?.map((photo, index) => (
 						<Image
 							key={index}
-							src={photo}
+							src={"data:image/jpeg;base64," + photo.imagemBase64}
 							mb="8px"
 							alt={`car image ${index + 1}`}
 							maxWidth="30%"
