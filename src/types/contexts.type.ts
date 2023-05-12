@@ -1,4 +1,5 @@
-import { iUser } from "./user.type";
+import { Dispatch, SetStateAction } from "react";
+import { iAddress, iUser } from "./user.type";
 import { iSendResetPasswordEmail, iUserResetPassword } from "./userForms";
 
 export interface iGlobalContextProps {
@@ -14,12 +15,17 @@ export interface iLoginForm {
 }
 
 export interface iUserContextProps {
-	login: (data: iLoginForm) => Promise<void>;
 	user: iUser | null;
-	setUser: React.Dispatch<React.SetStateAction<iUser | null>>;
+	owner: iUser | null;
+	globalLoading: boolean;
+	address: iAddress | null;
 	requestResetPassword: (
 		data: iSendResetPasswordEmail
 	) => Promise<string | undefined>;
+	login: (data: iLoginForm) => Promise<void>;
+	setUser: Dispatch<SetStateAction<iUser | null>>;
+	setOwner: Dispatch<SetStateAction<iUser | null>>;
+	setAddress: Dispatch<SetStateAction<iAddress | null>>;
 	userResetPassword: (data: iUserResetPassword) => Promise<string | undefined>;
 }
 

@@ -10,7 +10,7 @@ const AvatarTag = ({ name, color, id }: iAvatarProps) => {
 		"&:hover": {
 			cursor: "pointer",
 			".label": {
-				color: "brand.1",
+				color: useColorModeValue("brand.1", "grey.6"),
 				transition: "all 0.5s ease-out"
 			}
 		}
@@ -29,7 +29,13 @@ const AvatarTag = ({ name, color, id }: iAvatarProps) => {
 					border="none"
 					onClick={() => navigate(`/profile/${id}`)}
 				>
-					<Avatar size="sm" name={name} mr={4} backgroundColor={color} />
+					<Avatar
+						size="sm"
+						name={name}
+						mr={4}
+						backgroundColor={color}
+						color="white"
+					/>
 					<TagLabel
 						color={useColorModeValue("grey.2", "grey.10")}
 						className="label"
@@ -46,7 +52,13 @@ const AvatarTag = ({ name, color, id }: iAvatarProps) => {
 					pl="0"
 					border="none"
 				>
-					<Avatar size="sm" name={name} mr={4} backgroundColor={color} />
+					<Avatar
+						size="sm"
+						name={name}
+						mr={4}
+						backgroundColor={color}
+						color="white"
+					/>
 					<TagLabel color={useColorModeValue("grey.2", "grey.10")}>
 						{name}
 					</TagLabel>
@@ -55,5 +67,5 @@ const AvatarTag = ({ name, color, id }: iAvatarProps) => {
 		</>
 	);
 };
-//ml={-1}
+
 export default AvatarTag;
