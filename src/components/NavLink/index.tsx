@@ -19,7 +19,7 @@ const NavLink = ({ children, variant, type, path }: iLinkProps) => {
 			)}
 
 			{type == "external" && (
-				<Link href={`http://${path}`} variant={variant} isExternal>
+				<Link href={path} variant={variant} isExternal>
 					{children}
 				</Link>
 			)}

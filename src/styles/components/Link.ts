@@ -81,7 +81,6 @@ const solidGrey = defineStyle({
 	h: "42px",
 	p: "8px",
 	maxW: "100%",
-	// minW: "120px",
 	fontSize: "16px",
 	borderRadius: "4px",
 	fontWeight: "semibold",

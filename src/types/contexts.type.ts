@@ -25,7 +25,6 @@ export interface iUserContextProps {
 	login: (data: iLoginForm) => Promise<void>;
 	setUser: Dispatch<SetStateAction<iUser | null>>;
 	setOwner: Dispatch<SetStateAction<iUser | null>>;
-	// setGlobalLoading: Dispatch<SetStateAction<boolean>>;
 	setAddress: Dispatch<SetStateAction<iAddress | null>>;
 	userResetPassword: (data: iUserResetPassword) => Promise<string | undefined>;
 }

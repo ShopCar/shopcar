@@ -33,7 +33,6 @@ export const UserProvider = ({ children }: mandatoryChildren) => {
 
 	const login = async (data: iLoginForm) => {
 		try {
-			console.log(123);
 			const response = await api.post("/login", data);
 
 			setUser(response.data.user);

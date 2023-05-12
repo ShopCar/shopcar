@@ -67,5 +67,5 @@ const AvatarTag = ({ name, color, id }: iAvatarProps) => {
 		</>
 	);
 };
-//ml={-1}
+
 export default AvatarTag;

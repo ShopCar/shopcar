@@ -19,7 +19,7 @@ import CarPhotos from "../../components/CarPhotos";
 import Comment from "../../components/Comment";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { icarResponse, icurrentCar } from "../../types/cars.type";
+import { iCarResponse, iCurrentCar } from "../../types/cars.type";
 import api from "../../services/api";
 import { iComment } from "../../types/comments";
 import { useUserContext } from "../../contexts/userContext";
@@ -30,7 +30,7 @@ import { AvatarProfile } from "../../components/Avatar";
 
 const CarDetail = () => {
 	const { user, setUser } = useUserContext();
-	const [currentCar, setCurrentCar] = useState<icurrentCar | null>(null);
+	const [currentCar, setCurrentCar] = useState<iCurrentCar | null>(null);
 	const [comments, setComments] = useState<iComment[] | null>(null);
 	const [comment, setComment] = useState<string | null>(null);
 
@@ -39,14 +39,7 @@ const CarDetail = () => {
 	useEffect(() => {
 		const getInitialData = async () => {
 			try {
-				// const userId = localStorage.getItem("UUID@shopCar");
-				// const token = localStorage.getItem("token@shopCar");
-				// const userData = await api(`/users/${userId}`, {
-				// 	headers: { Authorization: `Bearer ${token}` }
-				// });
-				// setUser(userData.data);
-
-				const { data }: AxiosResponse<icarResponse> = await api(`/cars/${id}`);
+				const { data }: AxiosResponse<iCarResponse> = await api(`/cars/${id}`);
 				const { user, ...carData } = data;
 
 				setCurrentCar({
@@ -167,7 +160,7 @@ const CarDetail = () => {
 							<NavLink
 								variant="brand1"
 								type="external"
-								path={`api.whatsapp.com/send?phone=+55+${currentCar?.userPhone}&text=Ol%C3%A1%2C%20venho%20por%20meio%20do%20seu%20portf%C3%B3lio%20na%20internet%2C%20gostaria%20de%20conhecer%20melhor%20seus%20servi%C3%A7os`}
+								path={`https://api.whatsapp.com/send?phone=+55+${currentCar?.userPhone}&text=Ol%C3%A1%2C%20venho%20por%20meio%20do%20seu%20portf%C3%B3lio%20na%20internet%2C%20gostaria%20de%20conhecer%20melhor%20seus%20servi%C3%A7os`}
 							>
 								Comprar
 							</NavLink>

@@ -21,7 +21,7 @@ export interface iCar {
 	value: number;
 }
 
-export interface icarResponse {
+export interface iCarResponse {
 	id: string;
 	brand: string;
 	model: string;
@@ -53,7 +53,7 @@ export interface icarResponse {
 	};
 }
 
-export interface icurrentCar {
+export interface iCurrentCar {
 	id: string;
 	brand: string;
 	model: string;
